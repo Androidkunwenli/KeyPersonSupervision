@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="region">
+        <item>红色区域</item>
+        <item>橙色区域</item>
+        <item>蓝色区域</item>
+    </string-array>
+    <string-array name="frequency">
+        <item>3次/60S</item>
+        <item>5次/60S</item>
+    </string-array>
+</resources>

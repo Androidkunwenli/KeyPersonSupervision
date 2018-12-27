@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bril.keypersonsupervision">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:name=".app.MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.EquipmentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PositionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PeopleAdmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AddPeopleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.NewsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PeopleMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.StatisticsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AnalysisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.TrajectoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.RegionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MapPositionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PatterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SetActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AddRegionActivity"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>
