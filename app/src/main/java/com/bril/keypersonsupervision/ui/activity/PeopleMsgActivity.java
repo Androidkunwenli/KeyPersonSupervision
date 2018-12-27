@@ -8,14 +8,19 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
+import com.bril.keypersonsupervision.bean.FindPatientsBean;
+import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.ui.adapter.PeopleMsgPagerAdapter;
 import com.bril.keypersonsupervision.ui.fragment.AnalysisFragment;
 import com.bril.keypersonsupervision.ui.fragment.GuardianMsgFragment;
 import com.bril.keypersonsupervision.ui.fragment.RecordFragment;
 import com.bril.keypersonsupervision.ui.fragment.StateFragment;
+import com.bril.keypersonsupervision.util.HttpUtils;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 
@@ -31,6 +36,8 @@ public class PeopleMsgActivity extends BaseActivity {
     TabLayout tabLayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+    @BindView(R.id.tv_name)
+    TextView tvName;
 
     public static void start(BaseActivity activity) {
         activity.startActivity(new Intent(activity, PeopleMsgActivity.class));
@@ -67,7 +74,13 @@ public class PeopleMsgActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
+        HttpUtils.findPatientById(mActivity, new JsonCallback<FindPatientsBean>() {
+            @Override
+            public void onSuccess(Response<FindPatientsBean> response) {
+                FindPatientsBean body = response.body();
+                tvName.setText(body.getName());
+            }
+        });
     }
 
 

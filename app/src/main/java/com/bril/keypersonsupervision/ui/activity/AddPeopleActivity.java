@@ -6,6 +6,10 @@ import android.widget.ImageView;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
+import com.bril.keypersonsupervision.bean.AddPatientBean;
+import com.bril.keypersonsupervision.callback.JsonCallback;
+import com.bril.keypersonsupervision.util.HttpUtils;
+import com.lzy.okgo.model.Response;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,7 +39,7 @@ public class AddPeopleActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.image_return, R.id.image_news})
+    @OnClick({R.id.image_return, R.id.image_news, R.id.tv_preservation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_return:
@@ -43,6 +47,14 @@ public class AddPeopleActivity extends BaseActivity {
                 break;
             case R.id.image_news:
                 NewsActivity.start(mActivity);
+                break;
+            case R.id.tv_preservation:
+                HttpUtils.addPatient(mActivity, new AddPatientBean(), new JsonCallback<Boolean>() {
+                    @Override
+                    public void onSuccess(Response<Boolean> response) {
+
+                    }
+                });
                 break;
         }
     }

@@ -9,10 +9,14 @@ import android.widget.TextView;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
+import com.bril.keypersonsupervision.bean.FindPatientsBean;
+import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.ui.adapter.PeopleAdmAdapter;
+import com.bril.keypersonsupervision.util.HttpUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lzy.okgo.model.Response;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -52,10 +56,12 @@ public class PeopleAdmActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        ArrayList<String> data = new ArrayList<>();
-        data.add("");
-        data.add("");
-        mAdapter.setNewData(data);
+        HttpUtils.findPatients(mActivity, new JsonCallback<List<FindPatientsBean>>() {
+            @Override
+            public void onSuccess(Response<List<FindPatientsBean>> response) {
+                    mAdapter.setNewData(response.body());
+            }
+        });
     }
 
     @OnClick({R.id.image_return, R.id.image_news,R.id.tv_add_people})

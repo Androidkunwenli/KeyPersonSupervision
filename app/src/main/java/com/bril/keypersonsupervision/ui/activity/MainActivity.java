@@ -129,25 +129,25 @@ public class MainActivity extends BaseActivity {
             case R.id.image_news:
                 NewsActivity.start(mActivity);
                 break;
-            case R.id.tv_map:
+            case R.id.tv_map://实时位置查询
                 PositionActivity.start(mActivity);
                 break;
-            case R.id.tv_trajectory:
+            case R.id.tv_trajectory://历史轨迹
                 TrajectoryActivity.start(mActivity);
                 break;
             case R.id.tv_equipment://设备信息
                 EquipmentActivity.start(mActivity);
                 break;
-            case R.id.tv_statistics:
+            case R.id.tv_statistics://统计分析
                 StatisticsActivity.start(mActivity);
                 break;
-            case R.id.tv_adm:
+            case R.id.tv_adm://人员管理
                 PeopleAdmActivity.start(mActivity);
                 break;
-            case R.id.tv_set:
+            case R.id.tv_set://边界设备
                 SetActivity.start(mActivity);
                 break;
-            case R.id.tv_patter:
+            case R.id.tv_patter://模式
                 PatterActivity.start(mActivity);
                 break;
         }

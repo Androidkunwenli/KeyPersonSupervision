@@ -14,4 +14,12 @@ public class ConfigUrl {
     public static String selectPatientsLocation = URl + "/ipmp/patients/selectPatientsLocation";
     //重症精神病患者首页图表
     public static String selectHistoryStatistics = URl + "/ipmp/patients/selectHistoryStatistics";
+    //重症精神患者列表
+    public static String findPatients = URl + "/ipmp/patients/findPatients";
+    //重症精神患者详情
+    public static String findPatientById = URl + "/ipmp/patients/findPatientById";
+    //违法乱纪列表
+    public static String selectCauseRecord = URl + "/ipmp/cause/selectCauseRecord";
+    //重症精神患者新增
+    public static String addPatient = URl + "/ipmp/patients/addPatient";
 }

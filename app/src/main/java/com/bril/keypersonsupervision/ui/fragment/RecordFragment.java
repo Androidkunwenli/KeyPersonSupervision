@@ -5,9 +5,13 @@ import android.support.v7.widget.RecyclerView;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseFragment;
+import com.bril.keypersonsupervision.bean.SelectCauseRecordBean;
+import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.ui.adapter.RecordAdapter;
+import com.bril.keypersonsupervision.util.HttpUtils;
+import com.lzy.okgo.model.Response;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -27,9 +31,12 @@ public class RecordFragment extends BaseFragment {
         recList.setLayoutManager(new LinearLayoutManager(mActivity));
         RecordAdapter adapter = new RecordAdapter();
         recList.setAdapter(adapter);
-        ArrayList<String> data = new ArrayList<>();
-        data.add("");
-        data.add("");
-        adapter.setNewData(data);
+
+        HttpUtils.selectCauseRecord(mActivity, new JsonCallback<List<SelectCauseRecordBean>>() {
+            @Override
+            public void onSuccess(Response<List<SelectCauseRecordBean>> response) {
+                adapter.setNewData(response.body());
+            }
+        });
     }
 }

@@ -305,6 +305,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_preservation"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:background="@drawable/shape_sure"
