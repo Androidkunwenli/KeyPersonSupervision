@@ -9,4 +9,34 @@
         <item>3次/60S</item>
         <item>5次/60S</item>
     </string-array>
+    <string-array name="sp_patients_type">
+        <!--肇事肇祸2.轻微滋事3.其他潜在暴力倾向-->
+        <item>肇事肇祸</item>
+        <item>轻微滋事</item>
+        <item>其他潜在暴力倾向</item>
+    </string-array>
+    <string-array name="sp_level">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="sp_type">
+        <!--1.村（居委会）2.卫生部门3.乡（镇、街道）-->
+        <item>村（居委会）</item>
+        <item>卫生部门</item>
+        <item>乡（镇、街道）</item>
+    </string-array>
+    <string-array name="sp_condition_type">
+        <!--1.村（居委会）2.卫生部门3.乡（镇、街道）-->
+        <item>精神分裂症</item>
+        <item>分裂情感性障碍</item>
+        <item>偏执性精神病</item>
+        <item>偏执性精神病</item>
+        <item>双相（情感）障碍</item>
+        <item>癫痫所致精神障碍</item>
+        <item>精神发育迟滞精神障碍</item>
+    </string-array>
 </resources>

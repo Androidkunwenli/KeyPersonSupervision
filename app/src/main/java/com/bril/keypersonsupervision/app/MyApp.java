@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.Utils;
 import com.lzy.okgo.OkGo;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.MapTileIndex;
@@ -20,7 +22,7 @@ public class MyApp extends Application {
         public String getTileURLString(final long pMapTileIndex) {
             String url = getBaseUrl() + "/" + MapTileIndex.getZoom(pMapTileIndex) + "/" + MapTileIndex.getX(pMapTileIndex)
                     + "/" + MapTileIndex.getY(pMapTileIndex) + mImageFilenameEnding;
-            Log.e("url",url);
+            Log.e("url", url);
             return url;
         }
     };
@@ -30,5 +32,6 @@ public class MyApp extends Application {
         super.onCreate();
         Utils.init(this);
         OkGo.getInstance().init(this);
+        Logger.addLogAdapter(new AndroidLogAdapter());
     }
 }

@@ -54,10 +54,17 @@
                     android:textSize="@dimen/sp_14" />
 
                 <EditText
+                    android:id="@+id/et_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/shape_background_input"
                     android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:paddingLeft="13dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -75,11 +82,14 @@
                     android:textSize="@dimen/sp_14" />
 
                 <RadioGroup
+                    android:id="@+id/rg_gender"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/rg_gender_male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="男"
@@ -87,6 +97,7 @@
                         android:textSize="@dimen/sp_14" />
 
                     <RadioButton
+                        android:id="@+id/rg_gender_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="女"
@@ -110,10 +121,17 @@
                     android:textSize="@dimen/sp_14" />
 
                 <EditText
+                    android:id="@+id/et_identity_card"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/shape_background_input"
                     android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:paddingLeft="13dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -131,9 +149,38 @@
                     android:textSize="@dimen/sp_14" />
 
                 <Spinner
+                    android:id="@+id/sp_patients_type"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
                     android:ellipsize="end"
+                    android:entries="@array/sp_patients_type"
+                    android:maxLines="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="13dp"
+                    android:text="病情类别:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
+
+                <Spinner
+                    android:id="@+id/sp_condition_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:ellipsize="end"
+                    android:entries="@array/sp_condition_type"
                     android:maxLines="1" />
             </LinearLayout>
 
@@ -162,10 +209,17 @@
                     android:textSize="@dimen/sp_14" />
 
                 <EditText
+                    android:id="@+id/et_supervise_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/shape_background_input"
                     android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:paddingLeft="13dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -183,10 +237,18 @@
                     android:textSize="@dimen/sp_14" />
 
                 <EditText
+                    android:id="@+id/et_supervise_telephone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/shape_background_input"
                     android:ellipsize="end"
-                    android:maxLines="1" />
+
+                    android:maxLines="1"
+                    android:paddingLeft="13dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -204,10 +266,17 @@
                     android:textSize="@dimen/sp_14" />
 
                 <EditText
+                    android:id="@+id/et_supervise_relationship"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/shape_background_input"
                     android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:paddingLeft="13dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
 
             <TextView
@@ -235,9 +304,13 @@
                     android:textSize="@dimen/sp_14" />
 
                 <Spinner
+                    android:id="@+id/sp_level"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
                     android:ellipsize="end"
+                    android:entries="@array/sp_level"
                     android:maxLines="1" />
             </LinearLayout>
 
@@ -256,9 +329,13 @@
                     android:textSize="@dimen/sp_14" />
 
                 <Spinner
+                    android:id="@+id/sp_office_type"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
                     android:ellipsize="end"
+                    android:entries="@array/sp_type"
                     android:maxLines="1" />
             </LinearLayout>
 
@@ -277,10 +354,17 @@
                     android:textSize="@dimen/sp_14" />
 
                 <EditText
+                    android:id="@+id/et_name_other"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/shape_background_input"
                     android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:paddingLeft="13dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -298,16 +382,24 @@
                     android:textSize="@dimen/sp_14" />
 
                 <EditText
+                    android:id="@+id/et_contact_telephone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/shape_background_input"
                     android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:paddingLeft="13dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_preservation"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginTop="13dp"
                 android:background="@drawable/shape_sure"
                 android:gravity="center"
                 android:paddingLeft="23dp"

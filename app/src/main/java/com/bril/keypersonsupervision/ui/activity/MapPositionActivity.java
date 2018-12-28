@@ -3,23 +3,14 @@ package com.bril.keypersonsupervision.ui.activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
+import com.bril.keypersonsupervision.ui.fragment.MapPositionFragment;
 
-import org.osmdroid.views.MapView;
-
-import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MapPositionActivity extends BaseActivity {
-    @BindView(R.id.image_return)
-    ImageView imageReturn;
-    @BindView(R.id.image_news)
-    ImageView imageNews;
-    @BindView(R.id.mapView)
-    MapView mapView;
 
     public static void start(FragmentActivity activity) {
         activity.startActivity(new Intent(activity, MapPositionActivity.class));
@@ -32,7 +23,10 @@ public class MapPositionActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        getSupportFragmentManager()    //
+                .beginTransaction()
+                .add(R.id.fl_layout, new MapPositionFragment())   // 此处的R.id.fragment_container是要盛放fragment的父容器
+                .commit();
     }
 
     @Override

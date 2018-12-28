@@ -49,7 +49,8 @@ public class PeopleAdmActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                PeopleMsgActivity.start(mActivity);
+                FindPatientsBean bean = (FindPatientsBean) adapter.getData().get(position);
+                PeopleMsgActivity.start(mActivity, String.valueOf(bean.getId()));
             }
         });
     }
@@ -59,12 +60,12 @@ public class PeopleAdmActivity extends BaseActivity {
         HttpUtils.findPatients(mActivity, new JsonCallback<List<FindPatientsBean>>() {
             @Override
             public void onSuccess(Response<List<FindPatientsBean>> response) {
-                    mAdapter.setNewData(response.body());
+                mAdapter.setNewData(response.body());
             }
         });
     }
 
-    @OnClick({R.id.image_return, R.id.image_news,R.id.tv_add_people})
+    @OnClick({R.id.image_return, R.id.image_news, R.id.tv_add_people})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_return:

@@ -1,6 +1,8 @@
 package com.bril.keypersonsupervision.ui.fragment;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseFragment;
@@ -19,6 +21,28 @@ public class StateFragment extends BaseFragment {
     @BindView(R.id.bar_chart)
     BarChart barChart;
     private BarChartManager barChartManager1;
+    private String mOsId;
+    private String mEquip_id;
+
+    //传输数据
+    public static StateFragment newInstance(String osId,String equip_id) {
+        StateFragment f = new StateFragment();
+        Bundle b = new Bundle();
+        b.putString("osId", osId);
+        b.putString("equip_id", equip_id);
+        f.setArguments(b);
+        return f;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mOsId = arguments.getString("osId");
+            mEquip_id = arguments.getString("equip_id");
+        }
+    }
 
     @Override
     public int initView() {

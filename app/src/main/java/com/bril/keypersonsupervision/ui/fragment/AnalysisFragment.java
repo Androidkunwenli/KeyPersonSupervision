@@ -1,6 +1,8 @@
 package com.bril.keypersonsupervision.ui.fragment;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseFragment;
@@ -24,6 +26,25 @@ public class AnalysisFragment extends BaseFragment {
     CircularProgressView mProView;
     @BindView(R.id.line_chart)
     LineChart mLineChart;
+    private String mOsId;
+
+    //传输数据
+    public static AnalysisFragment newInstance(String osId) {
+        AnalysisFragment f = new AnalysisFragment();
+        Bundle b = new Bundle();
+        b.putString("osId", osId);
+        f.setArguments(b);
+        return f;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mOsId = arguments.getString("osId");
+        }
+    }
 
     @Override
     public int initView() {

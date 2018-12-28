@@ -19,7 +19,9 @@ public class ConfigUrl {
     //重症精神患者详情
     public static String findPatientById = URl + "/ipmp/patients/findPatientById";
     //违法乱纪列表
-    public static String selectCauseRecord = URl + "/ipmp/cause/selectCauseRecord";
+    public static String selectByPrimaryKey = URl + "/ipmp/cause/selectByPrimaryKey";
     //重症精神患者新增
     public static String addPatient = URl + "/ipmp/patients/addPatient";
+    //重点人员实时位置查询
+    public static String selectPatients = URl + "/ipmp/patients/selectPatients";
 }

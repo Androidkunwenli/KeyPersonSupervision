@@ -8,11 +8,19 @@ public class SelectPatientsLocationBean {
      * name : 病人1
      * longitude : 114.4958533
      */
-
+    private String id;
     private String created_time;
     private String latitude;
     private String name;
     private String longitude;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCreated_time() {
         return created_time;

@@ -11,6 +11,15 @@ public class SelectCauseRecordBean {
     private String cause_place;
     private String event_passing;
     private String handle_result;
+    /**
+     * cause_person : 司务长
+     * cause_date : 2018-12-22 ：24:00
+     * id : 2
+     */
+
+    private String cause_person;
+    private String cause_date;
+    private int id;
 
     public String getCause_place() {
         return cause_place;
@@ -34,5 +43,29 @@ public class SelectCauseRecordBean {
 
     public void setHandle_result(String handle_result) {
         this.handle_result = handle_result;
+    }
+
+    public String getCause_person() {
+        return cause_person;
+    }
+
+    public void setCause_person(String cause_person) {
+        this.cause_person = cause_person;
+    }
+
+    public String getCause_date() {
+        return cause_date;
+    }
+
+    public void setCause_date(String cause_date) {
+        this.cause_date = cause_date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

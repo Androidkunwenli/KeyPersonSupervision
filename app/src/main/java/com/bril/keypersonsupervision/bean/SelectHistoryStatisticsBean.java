@@ -15,7 +15,7 @@ public class SelectHistoryStatisticsBean {
     private int redArea;
 
     public int getIntrusionZone() {
-        return intrusionZone != 0 ? intrusionZone : 1;
+        return intrusionZone;
     }
 
     public void setIntrusionZone(int intrusionZone) {
@@ -23,7 +23,7 @@ public class SelectHistoryStatisticsBean {
     }
 
     public int getOrangeArea() {
-        return orangeArea != 0 ? orangeArea : 5;
+        return orangeArea;
     }
 
     public void setOrangeArea(int orangeArea) {
@@ -31,7 +31,7 @@ public class SelectHistoryStatisticsBean {
     }
 
     public int getBlueArea() {
-        return blueArea != 0 ? blueArea : 8;
+        return blueArea;
     }
 
     public void setBlueArea(int blueArea) {
@@ -39,10 +39,43 @@ public class SelectHistoryStatisticsBean {
     }
 
     public int getRedArea() {
-        return redArea != 0 ? redArea : 2;
+        return redArea;
     }
 
     public void setRedArea(int redArea) {
         this.redArea = redArea;
     }
+//
+//    public int getIntrusionZone() {
+//        return intrusionZone != 0 ? intrusionZone : 1;
+//    }
+//
+//    public void setIntrusionZone(int intrusionZone) {
+//        this.intrusionZone = intrusionZone;
+//    }
+//
+//    public int getOrangeArea() {
+//        return orangeArea != 0 ? orangeArea : 5;
+//    }
+//
+//    public void setOrangeArea(int orangeArea) {
+//        this.orangeArea = orangeArea;
+//    }
+//
+//    public int getBlueArea() {
+//        return blueArea != 0 ? blueArea : 8;
+//    }
+//
+//    public void setBlueArea(int blueArea) {
+//        this.blueArea = blueArea;
+//    }
+//
+//    public int getRedArea() {
+//        return redArea != 0 ? redArea : 2;
+//    }
+//
+//    public void setRedArea(int redArea) {
+//        this.redArea = redArea;
+//    }
+//}
 }

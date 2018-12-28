@@ -10,7 +10,9 @@ import com.bril.keypersonsupervision.base.BaseActivity;
 import com.bril.keypersonsupervision.bean.DrawBaseModel;
 import com.bril.keypersonsupervision.view.EditRegionFragment;
 import com.bril.keypersonsupervision.widgets.SectorPathOverlay;
+import com.orhanobut.logger.Logger;
 
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.views.MapView;
 
 import butterknife.BindView;
@@ -44,7 +46,19 @@ public class AddRegionActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        mPathOverlay = new SectorPathOverlay(mActivity);
+        mPathOverlay = new SectorPathOverlay(mActivity, new SectorPathOverlay.drawListener() {
+            @Override
+            public void drawCircleListener(IGeoPoint circularGeoPoint, double mapRadius) {
+                Logger.i("getLatitude " + circularGeoPoint.getLatitude()
+                        + "\ngetLongitude" + circularGeoPoint.getLongitude()
+                        + "\nmapRadius" + mapRadius);
+            }
+
+            @Override
+            public void drawRectangleListener() {
+
+            }
+        });
         mPathOverlay.setType(DrawBaseModel.TPEY_RECT);
         mapView.getOverlays().add(mPathOverlay);
     }
@@ -78,7 +92,7 @@ public class AddRegionActivity extends BaseActivity {
                 break;
             case R.id.tv_sure:
                 EditRegionFragment editRegionFragment = new EditRegionFragment();
-                editRegionFragment.show(getSupportFragmentManager(),"editRegionFragment");
+                editRegionFragment.show(getSupportFragmentManager(), "editRegionFragment");
                 break;
         }
     }

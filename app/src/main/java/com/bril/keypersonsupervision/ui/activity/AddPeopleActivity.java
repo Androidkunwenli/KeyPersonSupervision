@@ -2,7 +2,13 @@ package com.bril.keypersonsupervision.ui.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
@@ -19,6 +25,37 @@ public class AddPeopleActivity extends BaseActivity {
     ImageView imageReturn;
     @BindView(R.id.image_news)
     ImageView imageNews;
+    @BindView(R.id.et_name)
+    EditText etName;
+    @BindView(R.id.rg_gender_male)
+    RadioButton rgGenderMale;
+    @BindView(R.id.rg_gender_female)
+    RadioButton rgGenderFemale;
+    @BindView(R.id.rg_gender)
+    RadioGroup rgGender;
+    @BindView(R.id.et_identity_card)
+    EditText etIdentityCard;
+    @BindView(R.id.sp_patients_type)
+    Spinner spPatientsType;
+    @BindView(R.id.sp_condition_type)
+    Spinner spConditionType;
+    @BindView(R.id.et_supervise_name)
+    EditText etSuperviseName;
+    @BindView(R.id.et_supervise_telephone)
+    EditText etSuperviseTelephone;
+    @BindView(R.id.et_supervise_relationship)
+    EditText etSuperviseRelationship;
+    @BindView(R.id.sp_level)
+    Spinner spLevel;
+    @BindView(R.id.sp_office_type)
+    Spinner spOfficeType;
+    @BindView(R.id.et_name_other)
+    EditText etNameOther;
+    @BindView(R.id.et_contact_telephone)
+    EditText etContactTelephone;
+    @BindView(R.id.tv_preservation)
+    TextView tvPreservation;
+    private AddPatientBean mAddPatientBean = new AddPatientBean();
 
     public static void start(BaseActivity activity) {
         activity.startActivity(new Intent(activity, AddPeopleActivity.class));
@@ -36,7 +73,41 @@ public class AddPeopleActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rg_gender_male:
+                        mAddPatientBean.setGender("男");
+                        break;
+                    case R.id.rg_gender_female:
+                        mAddPatientBean.setGender("女");
+                        break;
+                }
+            }
+        });
+        spPatientsType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mAddPatientBean.setPatientsType(getResources().getStringArray(R.array.sp_patients_type)[position]);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spConditionType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mAddPatientBean.setConditionType(getResources().getStringArray(R.array.sp_condition_type)[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @OnClick({R.id.image_return, R.id.image_news, R.id.tv_preservation})
@@ -49,7 +120,10 @@ public class AddPeopleActivity extends BaseActivity {
                 NewsActivity.start(mActivity);
                 break;
             case R.id.tv_preservation:
-                HttpUtils.addPatient(mActivity, new AddPatientBean(), new JsonCallback<Boolean>() {
+                mAddPatientBean.setName(etName.getText().toString().trim());
+                mAddPatientBean.setIdentityCard(etIdentityCard.getText().toString().trim());
+                mAddPatientBean.setSupervisePerson(etSuperviseName.getText().toString().trim());
+                HttpUtils.addPatient(mActivity, mAddPatientBean, new JsonCallback<Boolean>() {
                     @Override
                     public void onSuccess(Response<Boolean> response) {
 

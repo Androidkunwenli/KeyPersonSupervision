@@ -17,6 +17,7 @@ import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.ui.adapter.PeopleMsgPagerAdapter;
 import com.bril.keypersonsupervision.ui.fragment.AnalysisFragment;
 import com.bril.keypersonsupervision.ui.fragment.GuardianMsgFragment;
+import com.bril.keypersonsupervision.ui.fragment.MapPositionFragment;
 import com.bril.keypersonsupervision.ui.fragment.RecordFragment;
 import com.bril.keypersonsupervision.ui.fragment.StateFragment;
 import com.bril.keypersonsupervision.util.HttpUtils;
@@ -38,9 +39,17 @@ public class PeopleMsgActivity extends BaseActivity {
     ViewPager viewPager;
     @BindView(R.id.tv_name)
     TextView tvName;
+    @BindView(R.id.tv_gender_condition_type)
+    TextView tv_gender_condition_type;
+    @BindView(R.id.tv_identity_card)
+    TextView tv_identity_card;
+    private String mId;
+    private FindPatientsBean mBean;
 
-    public static void start(BaseActivity activity) {
-        activity.startActivity(new Intent(activity, PeopleMsgActivity.class));
+    public static void start(BaseActivity activity, String id) {
+        Intent intent = new Intent(activity, PeopleMsgActivity.class);
+        intent.putExtra("id", id);
+        activity.startActivity(intent);
     }
 
     @Override
@@ -50,13 +59,33 @@ public class PeopleMsgActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mId = getIntent().getStringExtra("id");
+
+    }
+
+    @Override
+    public void initData() {
+
+        HttpUtils.findPatientById(mActivity, mId, new JsonCallback<FindPatientsBean>() {
+            @Override
+            public void onSuccess(Response<FindPatientsBean> response) {
+                mBean = response.body();
+                tvName.setText(mBean.getName());
+                tv_gender_condition_type.setText(mBean.getGender() + "  " + mBean.getCondition_type());
+                tv_identity_card.setText("身份证号: " + mBean.getIdentity_card());
+                showFragment();
+            }
+        });
+    }
+
+    private void showFragment() {
         ArrayList<Fragment> fragmentList = new ArrayList<>();
         ArrayList<String> list_Title = new ArrayList<>();
-        fragmentList.add(new AnalysisFragment());
-        fragmentList.add(new RecordFragment());
-        fragmentList.add(new GuardianMsgFragment());
-        fragmentList.add(new AnalysisFragment());
-        fragmentList.add(new StateFragment());
+        fragmentList.add(AnalysisFragment.newInstance(mId));
+        fragmentList.add(RecordFragment.newInstance(mId));
+        fragmentList.add(GuardianMsgFragment.newInstance(mId));
+        fragmentList.add(MapPositionFragment.newInstance(mId));
+        fragmentList.add(StateFragment.newInstance(mId, mBean.getEquip_id()));
         list_Title.add("统计分析");
         list_Title.add("违乱记录");
         list_Title.add("监护人信息");
@@ -71,18 +100,6 @@ public class PeopleMsgActivity extends BaseActivity {
         viewPager.setAdapter(new PeopleMsgPagerAdapter(getSupportFragmentManager(), mActivity, fragmentList, list_Title));
         tabLayout.setupWithViewPager(viewPager);//此方法就是让tablayout和ViewPager联动
     }
-
-    @Override
-    public void initData() {
-        HttpUtils.findPatientById(mActivity, new JsonCallback<FindPatientsBean>() {
-            @Override
-            public void onSuccess(Response<FindPatientsBean> response) {
-                FindPatientsBean body = response.body();
-                tvName.setText(body.getName());
-            }
-        });
-    }
-
 
     @OnClick({R.id.image_return, R.id.image_news})
     public void onViewClicked(View view) {

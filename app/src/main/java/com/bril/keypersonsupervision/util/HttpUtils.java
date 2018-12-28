@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.bril.keypersonsupervision.bean.AddPatientBean;
 import com.bril.keypersonsupervision.callback.JsonCallback;
+import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 
 public class HttpUtils {
@@ -34,7 +35,7 @@ public class HttpUtils {
         OkGo.<T>get(ConfigUrl.selectHistoryStatistics)
                 .tag(context)
                 .params("buffer", "1")
-                .params("supervisePerson", "1")
+                .params("supervisePerson", "string")
                 .execute(jsonCallback);
     }
 
@@ -51,20 +52,20 @@ public class HttpUtils {
     /**
      * 重症精神患者详情
      */
-    public static <T> void findPatientById(Context context, JsonCallback<T> jsonCallback) {
+    public static <T> void findPatientById(Context context, String id, JsonCallback<T> jsonCallback) {
         OkGo.<T>get(ConfigUrl.findPatientById)
                 .tag(context)
-                .params("id", "1")
+                .params("id", id)
                 .execute(jsonCallback);
     }
 
     /**
-     * 重症精神患者详情
+     * 违法乱纪列表查询
      */
-    public static <T> void selectCauseRecord(Context context, JsonCallback<T> jsonCallback) {
-        OkGo.<T>get(ConfigUrl.selectCauseRecord)
+    public static <T> void selectByPrimaryKey(Context context, String id, JsonCallback<T> jsonCallback) {
+        OkGo.<T>get(ConfigUrl.selectByPrimaryKey)
                 .tag(context)
-                .params("causeperson", "string")
+                .params("id", id)
                 .execute(jsonCallback);
     }
 
@@ -72,9 +73,19 @@ public class HttpUtils {
      * 重症精神患者新增
      */
     public static <T> void addPatient(Context context, AddPatientBean addPatientBean, JsonCallback<T> jsonCallback) {
-        OkGo.<T>get(ConfigUrl.addPatient)
+        OkGo.<T>post(ConfigUrl.addPatient)
                 .tag(context)
-                .params(KUtil.objectToMap(addPatientBean), true)
+                .upJson(new Gson().toJson(addPatientBean))
+                .execute(jsonCallback);
+    }
+
+    /**
+     * 重点人员实时位置查询
+     */
+    public static <T> void selectPatients(Context context, String id, JsonCallback<T> jsonCallback) {
+        OkGo.<T>get(ConfigUrl.selectPatients)
+                .tag(context)
+                .params("id", id)
                 .execute(jsonCallback);
     }
 }

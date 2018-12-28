@@ -12,6 +12,7 @@ public class PeopleAdmAdapter extends BaseQuickAdapter<FindPatientsBean, BaseVie
 
     @Override
     protected void convert(BaseViewHolder helper, FindPatientsBean item) {
-        helper.setText(R.id.tv_name, item.getName());
+        helper.setText(R.id.tv_name, item.getName())
+                .setText(R.id.tv_gender_condition_type, item.getGender() + "  " + item.getCondition_type());
     }
 }

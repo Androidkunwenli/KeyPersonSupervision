@@ -8,10 +8,14 @@ import android.widget.ImageView;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
+import com.bril.keypersonsupervision.bean.SelectPatientsLocationBean;
+import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.ui.adapter.NewsAdapter;
+import com.bril.keypersonsupervision.util.HttpUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lzy.okgo.model.Response;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,29 +47,21 @@ public class NewsActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                PeopleMsgActivity.start(mActivity);
+                SelectPatientsLocationBean bean = (SelectPatientsLocationBean) adapter.getData().get(position);
+                PeopleMsgActivity.start(mActivity, bean.getId());
             }
         });
     }
 
     @Override
     public void initData() {
-        ArrayList<String> data = new ArrayList<>();
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        mAdapter.setNewData(data);
+        HttpUtils.selectPatientsLocation(mActivity, new JsonCallback<List<SelectPatientsLocationBean>>() {
+            @Override
+            public void onSuccess(Response<List<SelectPatientsLocationBean>> response) {
+                List<SelectPatientsLocationBean> body = response.body();
+                mAdapter.setNewData(body);
+            }
+        });
 
     }
 

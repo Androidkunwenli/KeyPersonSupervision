@@ -17,6 +17,7 @@ import com.bril.keypersonsupervision.bean.PathModel;
 import com.bril.keypersonsupervision.bean.RectModel;
 
 import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.util.Distance;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Overlay;
 
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class SectorPathOverlay extends Overlay {
 
+    private final drawListener mListener;
     private MapView mMapView;
 
     @Override
@@ -68,9 +70,10 @@ public class SectorPathOverlay extends Overlay {
     private boolean isPointUp = true;
     private Context context;
 
-    public SectorPathOverlay(Context context) {
+    public SectorPathOverlay(Context context, drawListener drawListener) {
         super(context);
         initView(context);
+        mListener = drawListener;
     }
 
     private void initView(Context context) {
@@ -228,9 +231,22 @@ public class SectorPathOverlay extends Overlay {
         float y = model.getCentery() - (model.getCentery() - model.getMovey()) / 2;
         float radius = model.getRadis() / 2;
         Log.i(TAG, "drawCircle: x =" + x + "y =" + y + "radius=" + radius);
-        IGeoPoint iGeoPoint = osmv.getProjection().fromPixels(x, y);
-        Log.i(TAG, "getLatitude = " + iGeoPoint.getLatitude() + "getLongitude =" + iGeoPoint.getLongitude());
+        //中心点对应坐标
+        IGeoPoint circularGeoPoint = osmv.getProjection().fromPixels(x, y);
+        //起点对应坐标
+        IGeoPoint radiusGeoPoint = osmv.getProjection().fromPixels(model.getCenterx(), model.getCentery());
+        double mapRadius = Distance.getSquaredDistanceToPoint(
+                circularGeoPoint.getLatitude(), circularGeoPoint.getLongitude(), radiusGeoPoint.getLatitude(), radiusGeoPoint.getLongitude());
+        if (mListener != null) {
+            mListener.drawCircleListener(circularGeoPoint, mapRadius);
+        }
         canvas.drawCircle(x, y, radius, paint);
+    }
+
+    public interface drawListener {
+        void drawCircleListener(IGeoPoint circularGeoPoint, double mapRadius);
+
+        void drawRectangleListener();
     }
 
     //画矩形

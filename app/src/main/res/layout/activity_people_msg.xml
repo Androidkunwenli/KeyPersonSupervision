@@ -40,6 +40,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_gender_condition_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
@@ -51,6 +52,7 @@
                 android:textSize="@dimen/sp_12" />
 
             <TextView
+                android:id="@+id/tv_identity_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
