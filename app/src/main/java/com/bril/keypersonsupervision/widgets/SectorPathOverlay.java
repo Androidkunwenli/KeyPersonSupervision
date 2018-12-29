@@ -17,7 +17,7 @@ import com.bril.keypersonsupervision.bean.PathModel;
 import com.bril.keypersonsupervision.bean.RectModel;
 
 import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.util.Distance;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Overlay;
 
@@ -235,10 +235,9 @@ public class SectorPathOverlay extends Overlay {
         IGeoPoint circularGeoPoint = osmv.getProjection().fromPixels(x, y);
         //起点对应坐标
         IGeoPoint radiusGeoPoint = osmv.getProjection().fromPixels(model.getCenterx(), model.getCentery());
-        double mapRadius = Distance.getSquaredDistanceToPoint(
-                circularGeoPoint.getLatitude(), circularGeoPoint.getLongitude(), radiusGeoPoint.getLatitude(), radiusGeoPoint.getLongitude());
+        double distanceToAsDouble = new GeoPoint(circularGeoPoint).distanceToAsDouble(radiusGeoPoint);
         if (mListener != null) {
-            mListener.drawCircleListener(circularGeoPoint, mapRadius);
+            mListener.drawCircleListener(circularGeoPoint, distanceToAsDouble);
         }
         canvas.drawCircle(x, y, radius, paint);
     }

@@ -24,4 +24,6 @@ public class ConfigUrl {
     public static String addPatient = URl + "/ipmp/patients/addPatient";
     //重点人员实时位置查询
     public static String selectPatients = URl + "/ipmp/patients/selectPatients";
+    //监管人信息查询
+    public static String selectSupervisorsInfo = URl + "/ipmp/super/selectSupervisorsInfo";
 }

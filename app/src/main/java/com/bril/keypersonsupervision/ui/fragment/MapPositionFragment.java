@@ -11,6 +11,7 @@ import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.util.HttpUtils;
 import com.lzy.okgo.model.Response;
 
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import butterknife.BindView;
@@ -61,6 +62,12 @@ public class MapPositionFragment extends BaseFragment {
                 tvLatitudeLongitude.setText("经度:" + body.getLatitude() + " " + "纬度:" + body.getLongitude());
                 tvElectricity.setText("剩余电量:" + body.getElectricity() + "%");
                 tvHeartRate.setText("心率:" + body.getHeartrate() + "次/S");
+                try {
+                    mapView.getController().setCenter(new GeoPoint(Double.valueOf(body.getLatitude()),
+                            Double.valueOf(body.getLongitude())));
+                } catch (Exception e) {
+                }
+
             }
         });
     }

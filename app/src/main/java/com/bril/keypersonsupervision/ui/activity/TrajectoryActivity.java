@@ -210,13 +210,12 @@ public class TrajectoryActivity extends BaseActivity {
 
 
         Polygon polygon = new Polygon();
-        polygon.setStrokeWidth(10);
-        polygon.setStrokeColor(0xffff0000);
-        polygon.setFillColor(0x550000ff);
-        polygon.setPoints(Polygon.pointsAsCircle(new GeoPoint(38.0439678925254, 114.49238777160645), 134));
-//        List<GeoPoint> points = Polygon.pointsAsRect(new GeoPoint(38.0, 114.0), 50000, 50000);
-//        polygon.setPoints(points);
+        polygon.setStrokeWidth(0);
+        polygon.setStrokeColor(getResources().getColor(R.color.transparent));
+        polygon.setFillColor(getResources().getColor(R.color.map_red));
+        polygon.setPoints(Polygon.pointsAsCircle(new GeoPoint(38.0439678925254, 114.49238777160645), 350));
         mMapView.getOverlays().add(polygon);
+
     }
 
     private static final String TAG = "TrajectoryActivity";

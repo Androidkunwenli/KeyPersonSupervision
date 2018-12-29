@@ -22,68 +22,40 @@
             android:padding="6dp">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/tv_supervisor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:maxLines="1"
+                android:text="姓名:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="13dp"
-                    android:text="姓名:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/tv_supervisor_telephone"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:maxLines="1"
+                android:text="姓名:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="13dp"
-                    android:text="联系方式:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/tv_supervisor_relationship"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:maxLines="1"
+                android:text="姓名:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="13dp"
-                    android:text="关系:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -102,92 +74,54 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
+            <TextView
+                android:id="@+id/tv_department_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:maxLines="1"
+                android:text="卫生部门评估等级:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="13dp"
-                    android:text="卫生部门评估等级:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/tv_department_information"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:maxLines="1"
+                android:text="综治办联系人及信息管理:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="13dp"
-                    android:text="综治办联系人及信息管理:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/tv_department_name"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:maxLines="1"
+                android:text="姓名:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="13dp"
-                    android:text="姓名:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/tv_department_telephone"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="13dp"
-                    android:text="联系方式:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-            </LinearLayout>
+                android:maxLines="1"
+                android:text="姓名:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="23dp"

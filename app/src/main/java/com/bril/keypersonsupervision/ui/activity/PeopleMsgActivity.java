@@ -83,7 +83,7 @@ public class PeopleMsgActivity extends BaseActivity {
         ArrayList<String> list_Title = new ArrayList<>();
         fragmentList.add(AnalysisFragment.newInstance(mId));
         fragmentList.add(RecordFragment.newInstance(mId));
-        fragmentList.add(GuardianMsgFragment.newInstance(mId));
+        fragmentList.add(GuardianMsgFragment.newInstance(mBean.getIdentity_card()));
         fragmentList.add(MapPositionFragment.newInstance(mId));
         fragmentList.add(StateFragment.newInstance(mId, mBean.getEquip_id()));
         list_Title.add("统计分析");

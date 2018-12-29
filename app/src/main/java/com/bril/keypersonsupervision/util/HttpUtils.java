@@ -88,4 +88,14 @@ public class HttpUtils {
                 .params("id", id)
                 .execute(jsonCallback);
     }
+    /**
+     * 重点人员实时位置查询
+     */
+    public static <T> void selectSupervisorsInfo(Context context, String patientsidentitycard,
+                                                 JsonCallback<T> jsonCallback) {
+        OkGo.<T>get(ConfigUrl.selectSupervisorsInfo)
+                .tag(context)
+                .params("patientsidentitycard", patientsidentitycard)
+                .execute(jsonCallback);
+    }
 }

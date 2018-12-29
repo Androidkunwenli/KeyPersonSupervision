@@ -1,5 +1,6 @@
 package com.bril.keypersonsupervision.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
 import com.bril.keypersonsupervision.bean.AddPatientBean;
@@ -57,7 +59,7 @@ public class AddPeopleActivity extends BaseActivity {
     TextView tvPreservation;
     private AddPatientBean mAddPatientBean = new AddPatientBean();
 
-    public static void start(BaseActivity activity) {
+    public static void start(Activity activity) {
         activity.startActivity(new Intent(activity, AddPeopleActivity.class));
     }
 
@@ -108,6 +110,27 @@ public class AddPeopleActivity extends BaseActivity {
 
             }
         });
+        spLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mAddPatientBean.setLevel(getResources().getStringArray(R.array.sp_level)[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spOfficeType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mAddPatientBean.setOthertype(String.valueOf(position + 1));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     @OnClick({R.id.image_return, R.id.image_news, R.id.tv_preservation})
@@ -120,13 +143,20 @@ public class AddPeopleActivity extends BaseActivity {
                 NewsActivity.start(mActivity);
                 break;
             case R.id.tv_preservation:
-                mAddPatientBean.setName(etName.getText().toString().trim());
+                mAddPatientBean.setPatientsname(etName.getText().toString().trim());
                 mAddPatientBean.setIdentityCard(etIdentityCard.getText().toString().trim());
-                mAddPatientBean.setSupervisePerson(etSuperviseName.getText().toString().trim());
+                mAddPatientBean.setName(etSuperviseName.getText().toString().trim());
+                mAddPatientBean.setContact(etSuperviseTelephone.getText().toString().trim());
+                mAddPatientBean.setRelationship(etSuperviseRelationship.getText().toString().trim());
+                mAddPatientBean.setOthername(etNameOther.getText().toString().trim());
+                mAddPatientBean.setOthercontact(etContactTelephone.getText().toString().trim());
                 HttpUtils.addPatient(mActivity, mAddPatientBean, new JsonCallback<Boolean>() {
                     @Override
                     public void onSuccess(Response<Boolean> response) {
-
+                        if (response.body()) {
+                            ToastUtils.showShort("添加患者成功!");
+                            finish();
+                        }
                     }
                 });
                 break;
