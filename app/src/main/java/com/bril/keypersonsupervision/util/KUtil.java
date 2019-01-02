@@ -1,9 +1,19 @@
 package com.bril.keypersonsupervision.util;
 
+import android.content.Context;
+
+import com.bril.keypersonsupervision.R;
+
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.OverlayItem;
+
 import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -64,5 +74,23 @@ public class KUtil {
             e.printStackTrace();
         }
         return map;
+    }
+
+    /**
+     * 添加相关的marker
+     *
+     * @param currentLocation
+     */
+    public static void addCurrentMarker(Context context, GeoPoint currentLocation, MapView mapView) {
+        OverlayItem myLocationOverlayItem = new OverlayItem("", "", currentLocation);
+        myLocationOverlayItem.setMarker(context.getResources().getDrawable(R.mipmap.ic_position));
+        final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+        items.add(myLocationOverlayItem);
+//        ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
+        ItemizedOverlayWithFocus<OverlayItem> currentLocationOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
+                null, context);
+        currentLocationOverlay.setFocusItemsOnTap(true);
+        mapView.getOverlays().add(currentLocationOverlay);
+        mapView.getController().setCenter(currentLocation);
     }
 }

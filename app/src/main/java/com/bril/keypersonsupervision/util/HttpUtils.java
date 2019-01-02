@@ -77,7 +77,9 @@ public class HttpUtils {
                 .tag(context)
                 .upJson(new Gson().toJson(addPatientBean))
                 .execute(jsonCallback);
-    }   /**
+    }
+
+    /**
      * 重症精神患者更新
      */
     public static <T> void updatePatient(Context context, AddPatientBean addPatientBean, JsonCallback<T> jsonCallback) {
@@ -96,6 +98,17 @@ public class HttpUtils {
                 .params("id", id)
                 .execute(jsonCallback);
     }
+
+    /**
+     * 重症精神病患者实时位置查询
+     */
+    public static <T> void selectPatient(Context context, String supervisePerson, JsonCallback<T> jsonCallback) {
+        OkGo.<T>get(ConfigUrl.selectPatient)
+                .tag(context)
+                .params("supervisePerson", supervisePerson)
+                .execute(jsonCallback);
+    }
+
     /**
      * 重点人员实时位置查询
      */
@@ -104,6 +117,19 @@ public class HttpUtils {
         OkGo.<T>get(ConfigUrl.selectSupervisorsInfo)
                 .tag(context)
                 .params("patientsidentitycard", patientsidentitycard)
+                .execute(jsonCallback);
+    }
+
+    /**
+     * 重点人员实时轨迹
+     */
+    public static <T> void findPatientTrajectory(Context context, String startTime, String id, String endTime,
+                                                 JsonCallback<T> jsonCallback) {
+        OkGo.<T>get(ConfigUrl.findPatientTrajectory)
+                .tag(context)
+                .params("startTime", startTime)
+                .params("id", id)
+                .params("endTime", endTime)
                 .execute(jsonCallback);
     }
 }

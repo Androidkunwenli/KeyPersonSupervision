@@ -22,10 +22,14 @@ public class ConfigUrl {
     public static String selectByPrimaryKey = URl + "/ipmp/cause/selectByPrimaryKey";
     //重症精神患者新增
     public static String addPatient = URl + "/ipmp/patients/addPatient";
+    //重症精神病患者实时位置查询
+    public static String selectPatient = URl + "/ipmp/patients/selectPatient";
     //重点人员实时位置查询
     public static String selectPatients = URl + "/ipmp/patients/selectPatients";
     //监管人信息查询
     public static String selectSupervisorsInfo = URl + "/ipmp/super/selectSupervisorsInfo";
     //重症精神患者更新
     public static String updatePatient = URl + "/ipmp/patients/updatePatient";
+    //重症精神患者轨迹
+    public static String findPatientTrajectory = URl + "/ipmp/patients/findPatientTrajectory";
 }

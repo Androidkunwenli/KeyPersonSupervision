@@ -12,13 +12,17 @@ import android.widget.ImageView;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
+import com.bril.keypersonsupervision.bean.SelectPatientBean;
+import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.ui.adapter.PositionAdapter;
+import com.bril.keypersonsupervision.util.HttpUtils;
+import com.lzy.okgo.model.Response;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,6 +37,7 @@ public class PositionActivity extends BaseActivity {
     MapView mMapView;
     @BindView(R.id.rec_list)
     RecyclerView mRecList;
+    private PositionAdapter mAdapter;
 
     public static void start(BaseActivity activity) {
         activity.startActivity(new Intent(activity, PositionActivity.class));
@@ -48,18 +53,18 @@ public class PositionActivity extends BaseActivity {
     @Override
     public void initView() {
         mRecList.setLayoutManager(new LinearLayoutManager(mActivity));
-        PositionAdapter adapter = new PositionAdapter();
-        mRecList.setAdapter(adapter);
-        ArrayList<String> data = new ArrayList<>();
-        data.add("");
-        data.add("");
-        data.add("");
-        adapter.setNewData(data);
+        mAdapter = new PositionAdapter();
+        mRecList.setAdapter(mAdapter);
     }
 
     @Override
     public void initData() {
-
+        HttpUtils.selectPatient(mActivity, "string", new JsonCallback<List<SelectPatientBean>>() {
+            @Override
+            public void onSuccess(Response<List<SelectPatientBean>> response) {
+                mAdapter.setNewData(response.body());
+            }
+        });
     }
 
     @Override

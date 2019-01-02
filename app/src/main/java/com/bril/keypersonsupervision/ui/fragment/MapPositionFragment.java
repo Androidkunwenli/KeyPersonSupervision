@@ -9,6 +9,7 @@ import com.bril.keypersonsupervision.base.BaseFragment;
 import com.bril.keypersonsupervision.bean.SelectPatientsBean;
 import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.util.HttpUtils;
+import com.bril.keypersonsupervision.util.KUtil;
 import com.lzy.okgo.model.Response;
 
 import org.osmdroid.util.GeoPoint;
@@ -65,6 +66,8 @@ public class MapPositionFragment extends BaseFragment {
                 try {
                     mapView.getController().setCenter(new GeoPoint(Double.valueOf(body.getLatitude()),
                             Double.valueOf(body.getLongitude())));
+                    KUtil.addCurrentMarker(mActivity.getApplicationContext(),
+                            new GeoPoint(Double.valueOf(body.getLatitude()), Double.valueOf(body.getLongitude())), mapView);
                 } catch (Exception e) {
                 }
 

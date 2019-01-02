@@ -1,34 +1,30 @@
 package com.bril.keypersonsupervision.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
-import com.bril.keypersonsupervision.ui.adapter.PeopleChoiceAdapter;
-import com.bril.keypersonsupervision.ui.adapter.TrajectoryListAdapter;
+import com.bril.keypersonsupervision.bean.FindPatientTrajectoryBean;
+import com.bril.keypersonsupervision.bean.SelectPatientBean;
+import com.bril.keypersonsupervision.callback.JsonCallback;
+import com.bril.keypersonsupervision.ui.adapter.PositionAdapter;
+import com.bril.keypersonsupervision.util.HttpUtils;
 import com.bril.keypersonsupervision.widgets.CustomDatePicker;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lzy.okgo.model.Response;
 
-import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Polygon;
-import org.osmdroid.views.overlay.Polyline;
-import org.osmdroid.views.overlay.simplefastpoint.LabelledGeoPoint;
-import org.osmdroid.views.overlay.simplefastpoint.SimpleFastPointOverlay;
-import org.osmdroid.views.overlay.simplefastpoint.SimpleFastPointOverlayOptions;
-import org.osmdroid.views.overlay.simplefastpoint.SimplePointTheme;
+import org.osmdroid.views.overlay.TrajectoryPolyline;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -101,6 +97,11 @@ public class TrajectoryActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        TrajectoryPolyline polyline = new TrajectoryPolyline();
+        polyline.setWidth(3);
+        polyline.setIcon(getResources().getDrawable(R.mipmap.ic_position));
+        polyline.setColor(getResources().getColor(R.color.blue_shape));
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
         String now = sdf.format(new Date());
         tvStartTime.setText(now);
@@ -118,104 +119,59 @@ public class TrajectoryActivity extends BaseActivity {
             }
         }, "2018-01-01 00:00", now);
         mCustomDatePicker.showSpecificTime(true); // 不显示时和分
-        mCustomDatePicker.setIsLoop(true); // 不允许循环滚动
+        mCustomDatePicker.setIsLoop(false); // 不允许循环滚动
 
         recList.setLayoutManager(new LinearLayoutManager(mActivity));
-        PeopleChoiceAdapter adapter = new PeopleChoiceAdapter();
+        PositionAdapter adapter = new PositionAdapter();
         recList.setAdapter(adapter);
-        ArrayList<String> data = new ArrayList<>();
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        adapter.setNewData(data);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                lltime2.setVisibility(View.GONE);
-                recList2.setVisibility(View.VISIBLE);
-                tvListRegion.setVisibility(View.VISIBLE);
+                SelectPatientBean bean = (SelectPatientBean) adapter.getData().get(position);
+                HttpUtils.findPatientTrajectory(mActivity,
+                        tvStartTime.getText().toString().trim(),
+                        bean.getId(),
+                        tvStopTime.getText().toString().trim(),
+                        new JsonCallback<List<FindPatientTrajectoryBean>>() {
+                            @Override
+                            public void onSuccess(Response<List<FindPatientTrajectoryBean>> response) {
+                                List<FindPatientTrajectoryBean> body = response.body();
+                                if (body.size() != 0) {
+                                    ArrayList<GeoPoint> geoPoints = new ArrayList<>();
+                                    for (FindPatientTrajectoryBean trajectoryBean : body) {
+                                        geoPoints.add(new GeoPoint(Double.valueOf(trajectoryBean.getLatitude()), Double.valueOf(trajectoryBean.getLongitude())));
+                                    }
+                                    polyline.setPoints(geoPoints);
+                                    mMapView.getOverlays().add(polyline);
+                                    mMapView.getController().setCenter(new GeoPoint(geoPoints.get(0).getLatitude(), geoPoints.get(0).getLongitude()));
+
+                                    lltime2.setVisibility(View.GONE);
+                                    recList2.setVisibility(View.GONE);
+                                    tvListRegion.setVisibility(View.VISIBLE);
+                                } else {
+                                    ToastUtils.showShort("没有查询到人员轨迹记录!");
+                                    mMapView.getController().setCenter(new GeoPoint(38.040311, 114.495846));
+
+                                    lltime2.setVisibility(View.GONE);
+                                    recList2.setVisibility(View.GONE);
+                                    tvListRegion.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+
             }
         });
 
-        recList2.setLayoutManager(new LinearLayoutManager(mActivity));
-        TrajectoryListAdapter trajectoryListAdapter = new TrajectoryListAdapter();
-        recList2.setAdapter(trajectoryListAdapter);
-        ArrayList<String> newData = new ArrayList<>();
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        newData.add("");
-        trajectoryListAdapter.setNewData(newData);
+        HttpUtils.selectPatient(mActivity, "string", new JsonCallback<List<SelectPatientBean>>() {
+            @Override
+            public void onSuccess(Response<List<SelectPatientBean>> response) {
+                adapter.setNewData(response.body());
+            }
+        });
     }
 
     @Override
     public void initData() {
-        mMapView.setActivity(mActivity);
-        Polyline polyline = new Polyline();
-        polyline.setWidth(6);
-        polyline.setColor(mActivity.getResources().getColor(R.color.blue_shape));
-        ArrayList<GeoPoint> geoPoints = new ArrayList<>();
-        geoPoints.add(new GeoPoint(38.040311, 114.495846));
-        geoPoints.add(new GeoPoint(38.0472973501, 114.4794505572));
-        geoPoints.add(new GeoPoint(38.0360743031, 114.4813347780));
-        geoPoints.add(new GeoPoint(38.0439213002, 114.5058844477));
-        geoPoints.add(new GeoPoint(38.0456756612, 114.5151556211));
-        polyline.setPoints(geoPoints);
-        mMapView.getOverlays().add(polyline);
-
-        // in most cases, there will be no problems of displaying >100k points, feel free to try
-        List<IGeoPoint> points = new ArrayList<>();
-        for (GeoPoint geoPoint : geoPoints) {
-            points.add(new LabelledGeoPoint(geoPoint.getLatitude(), geoPoint.getLongitude()));
-        }
-
-        // wrap them in a theme
-        SimplePointTheme pt = new SimplePointTheme(points, true);
-
-        // create label style
-        Paint textStyle = new Paint();
-        textStyle.setStyle(Paint.Style.FILL);
-        textStyle.setColor(Color.parseColor("#0000ff"));
-        textStyle.setTextAlign(Paint.Align.CENTER);
-        textStyle.setTextSize(24);
-
-        // set some visual options for the overlay
-        // we use here MAXIMUM_OPTIMIZATION algorithm, which works well with >100k points
-        SimpleFastPointOverlayOptions opt = SimpleFastPointOverlayOptions.getDefaultStyle()
-                .setAlgorithm(SimpleFastPointOverlayOptions.RenderingAlgorithm.MAXIMUM_OPTIMIZATION)
-                .setRadius(10).setIsClickable(true).setCellSize(15).setTextStyle(textStyle);
-
-        // create the overlay with the theme
-        final SimpleFastPointOverlay sfpo = new SimpleFastPointOverlay(pt, opt);
-        sfpo.setOnClickListener(new SimpleFastPointOverlay.OnClickListener() {
-            @Override
-            public void onClick(SimpleFastPointOverlay.PointAdapter points, Integer point) {
-                Log.e("点击", points.get(0).getLatitude() + "," + points.get(0).getLongitude());
-            }
-        });
-        // add overlay
-        mMapView.getOverlays().add(sfpo);
-
-
-        Polygon polygon = new Polygon();
-        polygon.setStrokeWidth(0);
-        polygon.setStrokeColor(getResources().getColor(R.color.transparent));
-        polygon.setFillColor(getResources().getColor(R.color.map_red));
-        polygon.setPoints(Polygon.pointsAsCircle(new GeoPoint(38.0439678925254, 114.49238777160645), 350));
-        mMapView.getOverlays().add(polygon);
-
     }
 
     private static final String TAG = "TrajectoryActivity";
