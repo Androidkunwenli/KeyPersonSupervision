@@ -15,6 +15,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
 import com.bril.keypersonsupervision.bean.AddPatientBean;
+import com.bril.keypersonsupervision.bean.FindPatientsBean;
+import com.bril.keypersonsupervision.bean.SelectSupervisorsInfoBean;
 import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.util.HttpUtils;
 import com.lzy.okgo.model.Response;
@@ -58,9 +60,17 @@ public class AddPeopleActivity extends BaseActivity {
     @BindView(R.id.tv_preservation)
     TextView tvPreservation;
     private AddPatientBean mAddPatientBean = new AddPatientBean();
+    private boolean mIsBeanNull;
 
-    public static void start(Activity activity) {
-        activity.startActivity(new Intent(activity, AddPeopleActivity.class));
+    public static void start(Activity activity,
+                             FindPatientsBean patientsBean,
+                             SelectSupervisorsInfoBean.HeguardianBean heguardian,
+                             SelectSupervisorsInfoBean.ComprehensiveBean comprehensive) {
+        Intent intent = new Intent(activity, AddPeopleActivity.class);
+        intent.putExtra("patientsBean", patientsBean);
+        intent.putExtra("heguardian", heguardian);
+        intent.putExtra("comprehensive", comprehensive);
+        activity.startActivity(intent);
     }
 
     @Override
@@ -70,7 +80,47 @@ public class AddPeopleActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        FindPatientsBean patientsBean = getIntent().getParcelableExtra("patientsBean");
+        SelectSupervisorsInfoBean.HeguardianBean heguardian = getIntent().getParcelableExtra("heguardian");
+        SelectSupervisorsInfoBean.ComprehensiveBean comprehensive = getIntent().getParcelableExtra("comprehensive");
+        mIsBeanNull = patientsBean != null && heguardian != null && comprehensive != null;
+        tvPreservation.setText(mIsBeanNull ? "更新" : "保存");
+        if (mIsBeanNull) {
+            mAddPatientBean.setPatients1id(patientsBean.getId());
+            mAddPatientBean.setId(heguardian.getId());
+            mAddPatientBean.setOtherid(comprehensive.getId());
+            etName.setText(patientsBean.getName());
+            etIdentityCard.setText(patientsBean.getIdentity_card());
+            if ("男".equals(patientsBean.getGender())) {
+                rgGenderMale.setChecked(true);
+            } else if ("女".equals(patientsBean.getGender())) {
+                rgGenderFemale.setChecked(true);
+            }
+            String[] array = getResources().getStringArray(R.array.sp_patients_type);
+            for (int i = 0; i < array.length; i++) {
+                if (patientsBean.getPatients_type().equals(array[i])) {
+                    spPatientsType.setSelection(i);
+                }
+            }
+            String[] condition_type_array = getResources().getStringArray(R.array.sp_condition_type);
+            for (int i = 0; i < condition_type_array.length; i++) {
+                if (patientsBean.getCondition_type().equals(condition_type_array[i])) {
+                    spConditionType.setSelection(i);
+                }
+            }
+            etSuperviseName.setText(heguardian.getName());
+            etSuperviseTelephone.setText(heguardian.getContact());
+            etSuperviseRelationship.setText(heguardian.getRelationship());
+            String[] level_array = getResources().getStringArray(R.array.sp_level);
+            for (int i = 0; i < level_array.length; i++) {
+                if (comprehensive.getLevel().equals(level_array[i])) {
+                    spLevel.setSelection(i);
+                }
+            }
+            spOfficeType.setSelection(Integer.valueOf(comprehensive.getType()) - 1);
+            etNameOther.setText(comprehensive.getName());
+            etContactTelephone.setText(comprehensive.getContact());
+        }
     }
 
     @Override
@@ -150,15 +200,27 @@ public class AddPeopleActivity extends BaseActivity {
                 mAddPatientBean.setRelationship(etSuperviseRelationship.getText().toString().trim());
                 mAddPatientBean.setOthername(etNameOther.getText().toString().trim());
                 mAddPatientBean.setOthercontact(etContactTelephone.getText().toString().trim());
-                HttpUtils.addPatient(mActivity, mAddPatientBean, new JsonCallback<Boolean>() {
-                    @Override
-                    public void onSuccess(Response<Boolean> response) {
-                        if (response.body()) {
-                            ToastUtils.showShort("添加患者成功!");
-                            finish();
+                if (mIsBeanNull) {//更改
+                    HttpUtils.updatePatient(mActivity, mAddPatientBean, new JsonCallback<Boolean>() {
+                        @Override
+                        public void onSuccess(Response<Boolean> response) {
+                            if (response.body()) {
+                                ToastUtils.showShort("更新患者资料成功!");
+                                finish();
+                            }
                         }
-                    }
-                });
+                    });
+                } else {//添加
+                    HttpUtils.addPatient(mActivity, mAddPatientBean, new JsonCallback<Boolean>() {
+                        @Override
+                        public void onSuccess(Response<Boolean> response) {
+                            if (response.body()) {
+                                ToastUtils.showShort("添加患者成功!");
+                                finish();
+                            }
+                        }
+                    });
+                }
                 break;
         }
     }

@@ -45,6 +45,7 @@ public class PeopleMsgActivity extends BaseActivity {
     TextView tv_identity_card;
     private String mId;
     private FindPatientsBean mBean;
+    private PeopleMsgPagerAdapter mAdapter;
 
     public static void start(BaseActivity activity, String id) {
         Intent intent = new Intent(activity, PeopleMsgActivity.class);
@@ -65,7 +66,11 @@ public class PeopleMsgActivity extends BaseActivity {
 
     @Override
     public void initData() {
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         HttpUtils.findPatientById(mActivity, mId, new JsonCallback<FindPatientsBean>() {
             @Override
             public void onSuccess(Response<FindPatientsBean> response) {
@@ -83,7 +88,7 @@ public class PeopleMsgActivity extends BaseActivity {
         ArrayList<String> list_Title = new ArrayList<>();
         fragmentList.add(AnalysisFragment.newInstance(mId));
         fragmentList.add(RecordFragment.newInstance(mId));
-        fragmentList.add(GuardianMsgFragment.newInstance(mBean.getIdentity_card()));
+        fragmentList.add(GuardianMsgFragment.newInstance(mBean));
         fragmentList.add(MapPositionFragment.newInstance(mId));
         fragmentList.add(StateFragment.newInstance(mId, mBean.getEquip_id()));
         list_Title.add("统计分析");
@@ -97,7 +102,12 @@ public class PeopleMsgActivity extends BaseActivity {
         linearLayout.setDividerDrawable(ContextCompat.getDrawable(this,
                 R.mipmap.ic_line));
         linearLayout.setDividerPadding(30);
-        viewPager.setAdapter(new PeopleMsgPagerAdapter(getSupportFragmentManager(), mActivity, fragmentList, list_Title));
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        } else {
+            mAdapter = new PeopleMsgPagerAdapter(getSupportFragmentManager(), mActivity, fragmentList, list_Title);
+            viewPager.setAdapter(mAdapter);
+        }
         tabLayout.setupWithViewPager(viewPager);//此方法就是让tablayout和ViewPager联动
     }
 

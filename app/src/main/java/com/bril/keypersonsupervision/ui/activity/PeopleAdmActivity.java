@@ -74,7 +74,7 @@ public class PeopleAdmActivity extends BaseActivity {
             case R.id.image_news:
                 break;
             case R.id.tv_add_people:
-                AddPeopleActivity.start(mActivity);
+                AddPeopleActivity.start(mActivity, null,null, null);
                 break;
         }
     }

@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseFragment;
-import com.bril.keypersonsupervision.bean.AddPatientBean;
+import com.bril.keypersonsupervision.bean.FindPatientsBean;
 import com.bril.keypersonsupervision.bean.SelectSupervisorsInfoBean;
 import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.ui.activity.AddPeopleActivity;
@@ -33,13 +33,15 @@ public class GuardianMsgFragment extends BaseFragment {
     TextView tvDepartmentTelephone;
     @BindView(R.id.tv_edit)
     TextView tvEdit;
-    private String mOsId;
+    private FindPatientsBean mOsId;
+    private SelectSupervisorsInfoBean.HeguardianBean mHeguardian;
+    private SelectSupervisorsInfoBean.ComprehensiveBean mComprehensive;
 
     //传输数据
-    public static GuardianMsgFragment newInstance(String osId) {
+    public static GuardianMsgFragment newInstance(FindPatientsBean osId) {
         GuardianMsgFragment f = new GuardianMsgFragment();
         Bundle b = new Bundle();
-        b.putString("osId", osId);
+        b.putParcelable("osId", osId);
         f.setArguments(b);
         return f;
     }
@@ -49,7 +51,7 @@ public class GuardianMsgFragment extends BaseFragment {
         super.onAttach(context);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            mOsId = arguments.getString("osId");
+            mOsId = arguments.getParcelable("osId");
         }
     }
 
@@ -57,24 +59,25 @@ public class GuardianMsgFragment extends BaseFragment {
     public int initView() {
         return R.layout.fragemnt_guardian_msg;
     }
-    private AddPatientBean mAddPatientBean = new AddPatientBean();
+
     @Override
-    public void initData() {
-        HttpUtils.selectSupervisorsInfo(mActivity, mOsId, new JsonCallback<SelectSupervisorsInfoBean>() {
+    public void onResume() {
+        super.onResume();
+        HttpUtils.selectSupervisorsInfo(mActivity, mOsId.getIdentity_card(), new JsonCallback<SelectSupervisorsInfoBean>() {
             @Override
             public void onSuccess(Response<SelectSupervisorsInfoBean> response) {
                 try {
                     SelectSupervisorsInfoBean body = response.body();
-                    SelectSupervisorsInfoBean.HeguardianBean heguardian = body.getHeguardian();
-                    tvSupervisorName.setText("姓名 : " + heguardian.getName());
-                    tvSupervisorTelephone.setText("联系方式 : " + heguardian.getContact());
-                    tvSupervisorRelationship.setText("关系 : " + heguardian.getRelationship());
-                    SelectSupervisorsInfoBean.ComprehensiveBean comprehensive = body.getComprehensive();
+                    mHeguardian = body.getHeguardian();
+                    tvSupervisorName.setText("姓名 : " + mHeguardian.getName());
+                    tvSupervisorTelephone.setText("联系方式 : " + mHeguardian.getContact());
+                    tvSupervisorRelationship.setText("关系 : " + mHeguardian.getRelationship());
+                    mComprehensive = body.getComprehensive();
                     String[] sp_type = getResources().getStringArray(R.array.sp_type);
-                    tvDepartmentGrade.setText("卫生部门评估等级 : " + comprehensive.getLevel());
-                    tvDepartmentInformation.setText("综治办联系人及信息管理 : " + sp_type[Integer.valueOf(comprehensive.getType())]);
-                    tvDepartmentName.setText("姓名 : " + comprehensive.getName());
-                    tvDepartmentTelephone.setText("联系方式 : " + comprehensive.getContact());
+                    tvDepartmentGrade.setText("卫生部门评估等级 : " + mComprehensive.getLevel());
+                    tvDepartmentInformation.setText("综治办联系人及信息管理 : " + sp_type[Integer.valueOf(mComprehensive.getType()) - 1]);
+                    tvDepartmentName.setText("姓名 : " + mComprehensive.getName());
+                    tvDepartmentTelephone.setText("联系方式 : " + mComprehensive.getContact());
                 } catch (Exception e) {
 
                 }
@@ -82,8 +85,9 @@ public class GuardianMsgFragment extends BaseFragment {
         });
     }
 
+
     @OnClick(R.id.tv_edit)
     public void onViewClicked() {
-        AddPeopleActivity.start(mActivity);
+        AddPeopleActivity.start(mActivity, mOsId, mHeguardian, mComprehensive);
     }
 }

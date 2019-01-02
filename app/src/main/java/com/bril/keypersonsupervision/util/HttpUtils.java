@@ -77,6 +77,14 @@ public class HttpUtils {
                 .tag(context)
                 .upJson(new Gson().toJson(addPatientBean))
                 .execute(jsonCallback);
+    }   /**
+     * 重症精神患者更新
+     */
+    public static <T> void updatePatient(Context context, AddPatientBean addPatientBean, JsonCallback<T> jsonCallback) {
+        OkGo.<T>post(ConfigUrl.updatePatient)
+                .tag(context)
+                .upJson(new Gson().toJson(addPatientBean))
+                .execute(jsonCallback);
     }
 
     /**

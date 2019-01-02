@@ -29,7 +29,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="姓名:"
+                android:text="姓名 :"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
 
@@ -40,7 +40,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="姓名:"
+                android:text="联系方式 :"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
 
@@ -51,7 +51,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="姓名:"
+                android:text="关系:"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
 
@@ -78,11 +78,11 @@
             <TextView
                 android:id="@+id/tv_department_grade"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="32dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="卫生部门评估等级:"
+                android:text="卫生部门评估等级 :"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
 
@@ -93,7 +93,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="综治办联系人及信息管理:"
+                android:text="综治办联系人及信息管理 :"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
 
@@ -104,7 +104,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="姓名:"
+                android:text="姓名 :"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
 
@@ -115,7 +115,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="姓名:"
+                android:text="联系方式 :"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>

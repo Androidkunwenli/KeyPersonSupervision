@@ -1,6 +1,9 @@
 package com.bril.keypersonsupervision.bean;
 
-public class FindPatientsBean {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class FindPatientsBean implements Parcelable {
 
     /**
      * supervise_person : string
@@ -135,4 +138,57 @@ public class FindPatientsBean {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.supervise_person);
+        dest.writeString(this.created_time);
+        dest.writeString(this.updated_time);
+        dest.writeString(this.gender);
+        dest.writeString(this.level);
+        dest.writeString(this.condition_type);
+        dest.writeString(this.created_by);
+        dest.writeString(this.identity_card);
+        dest.writeString(this.patients_type);
+        dest.writeString(this.equip_id);
+        dest.writeString(this.name);
+        dest.writeString(this.updated_by);
+        dest.writeInt(this.id);
+    }
+
+    public FindPatientsBean() {
+    }
+
+    protected FindPatientsBean(Parcel in) {
+        this.supervise_person = in.readString();
+        this.created_time = in.readString();
+        this.updated_time = in.readString();
+        this.gender = in.readString();
+        this.level = in.readString();
+        this.condition_type = in.readString();
+        this.created_by = in.readString();
+        this.identity_card = in.readString();
+        this.patients_type = in.readString();
+        this.equip_id = in.readString();
+        this.name = in.readString();
+        this.updated_by = in.readString();
+        this.id = in.readInt();
+    }
+
+    public static final Parcelable.Creator<FindPatientsBean> CREATOR = new Parcelable.Creator<FindPatientsBean>() {
+        @Override
+        public FindPatientsBean createFromParcel(Parcel source) {
+            return new FindPatientsBean(source);
+        }
+
+        @Override
+        public FindPatientsBean[] newArray(int size) {
+            return new FindPatientsBean[size];
+        }
+    };
 }
