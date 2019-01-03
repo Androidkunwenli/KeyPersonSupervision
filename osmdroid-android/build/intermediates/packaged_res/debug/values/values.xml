@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="background">#F1F1F1</color>
+    <color name="black">#ff000000</color>
+    <color name="black_transparent">#80000000</color>
+    <color name="blue">#ff0000ff</color>
+    <color name="blue_shape">#00CDDB</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="cyan">#ff00ffff</color>
+    <color name="darkgray">#938192</color>
+    <color name="dkgray">#80808FF0</color>
+    <color name="gray">#ff888888</color>
+    <color name="green">#ff00ff00</color>
+    <color name="lightgreen">#7cd12e</color>
+    <color name="ltgray">#ffcccccc</color>
+    <color name="magenta">#ffff00ff</color>
+    <color name="map_red">#80FF0000</color>
+    <color name="orange">#FFA500</color>
+    <color name="red">#ffff0000</color>
+    <color name="red_key_shape">#850000</color>
+    <color name="red_shape">#E90559</color>
+    <color name="split_line">#cccccc</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="yello">#F8F8FF00</color>
+    <color name="yellow">#ffffff00</color>
     <string name="about">About</string>
     <string name="about_message">This software uses map data provided by OpenStreetMap.org</string>
     <string name="app_name" translatable="false">Open Map</string>

@@ -7,7 +7,6 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.bean.CircleModel;
@@ -15,6 +14,7 @@ import com.bril.keypersonsupervision.bean.DrawBaseModel;
 import com.bril.keypersonsupervision.bean.LineModel;
 import com.bril.keypersonsupervision.bean.PathModel;
 import com.bril.keypersonsupervision.bean.RectModel;
+import com.bril.keypersonsupervision.util.KUtil;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.GeoPoint;
@@ -27,12 +27,9 @@ import java.util.List;
 public class SectorPathOverlay extends Overlay {
 
     private final drawListener mListener;
-    private MapView mMapView;
 
     @Override
     public void draw(Canvas canvas, MapView osmv, boolean shadow) {
-        mMapView = osmv;
-        // TODO Auto-generated method stub
         canvas.save();
         //绘制之前的图形
         for (DrawBaseModel model : list) {
@@ -96,10 +93,10 @@ public class SectorPathOverlay extends Overlay {
                 down(event);
                 break;
             case MotionEvent.ACTION_MOVE:
-                move(event);
+                move(event, mapView);
                 break;
             case MotionEvent.ACTION_UP:
-                up(event);
+                up(event, mapView);
                 break;
         }
         //返回true表明处理方法已经处理该事件
@@ -136,7 +133,7 @@ public class SectorPathOverlay extends Overlay {
     }
 
     //手指移动时的操作
-    private void move(MotionEvent event) {
+    private void move(MotionEvent event, MapView mapView) {
         switch (type) {
             case DrawBaseModel.TPEY_LINE:
                 ((LineModel) drawBaseModel).setEndx(event.getX());
@@ -160,12 +157,13 @@ public class SectorPathOverlay extends Overlay {
                 break;
         }
         Log.i("PaintView", "move");
-        mMapView.postInvalidate();
+
+        mapView.postInvalidate();
     }
 
     //手指抬起的操作
-    private void up(MotionEvent event) {
-        move(event);
+    private void up(MotionEvent event, MapView mapView) {
+        move(event, mapView);
         switch (type) {
             case DrawBaseModel.TPEY_LINE:
                 lineList.clear();
@@ -245,7 +243,7 @@ public class SectorPathOverlay extends Overlay {
     public interface drawListener {
         void drawCircleListener(IGeoPoint circularGeoPoint, double mapRadius);
 
-        void drawRectangleListener();
+        void drawRectangleListener(String pointStr);
     }
 
     //画矩形
@@ -255,6 +253,11 @@ public class SectorPathOverlay extends Overlay {
         float right = Math.max(model.getLeft(), model.getRight());
         float top = Math.min(model.getTop(), model.getBottom());
         float bottom = Math.max(model.getTop(), model.getBottom());
+        IGeoPoint upper = osmv.getProjection().fromPixels(left, top);
+        IGeoPoint lower = osmv.getProjection().fromPixels(left, bottom);
+        IGeoPoint lefter = osmv.getProjection().fromPixels(right, top);
+        IGeoPoint righter = osmv.getProjection().fromPixels(right, bottom);
+        mListener.drawRectangleListener(KUtil.getPointStr(upper, lower, righter, lefter));
         canvas.drawRect(left, top, right, bottom, paint);
 
     }
@@ -267,43 +270,16 @@ public class SectorPathOverlay extends Overlay {
     }
 
     //清空
-    public void clean() {
+    public void clean(MapView mapView) {
         path.reset();
         list.clear();
         delectList.clear();
         type = drawBaseModel.TPEY_CIRCLE;
-        mMapView.postInvalidate();
-    }
-
-    //撤销
-    public void cancel() {
-        if (list.size() > 0) {
-            DrawBaseModel delect = list.get(list.size() - 1);
-            list.remove(delect);
-            delectList.add(delect);
-            mMapView.postInvalidate();
-        } else {
-            Toast.makeText(context, "无内容可撤销！", Toast.LENGTH_SHORT).show();
-        }
-
+        mapView.postInvalidate();
     }
 
     //设置绘制图形类型
     public void setType(int type) {
         this.type = type;
-    }
-
-    //还原
-    public void restore() {
-        // TODO Auto-generated method stub
-        if (delectList.size() > 0) {
-            //将删除的路径列表中的最后一个，也就是最顶端路径取出（栈）,并加入路径保存列表中
-            DrawBaseModel dp = delectList.get(delectList.size() - 1);
-            list.add(dp);
-            delectList.remove(delectList.size() - 1);
-            mMapView.invalidate();
-        } else {
-            Toast.makeText(context, "无内容可还原！", Toast.LENGTH_SHORT).show();
-        }
     }
 }

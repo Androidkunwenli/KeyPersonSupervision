@@ -25,6 +25,7 @@ public class FindPatientsBean implements Parcelable {
     private String created_time;
     private String updated_time;
     private String gender;
+    private String age;
     private String level;
     private String condition_type;
     private String created_by;
@@ -34,6 +35,14 @@ public class FindPatientsBean implements Parcelable {
     private String name;
     private String updated_by;
     private int id;
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
 
     public String getSupervise_person() {
         return supervise_person;
@@ -139,6 +148,9 @@ public class FindPatientsBean implements Parcelable {
         this.id = id;
     }
 
+    public FindPatientsBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -150,6 +162,7 @@ public class FindPatientsBean implements Parcelable {
         dest.writeString(this.created_time);
         dest.writeString(this.updated_time);
         dest.writeString(this.gender);
+        dest.writeString(this.age);
         dest.writeString(this.level);
         dest.writeString(this.condition_type);
         dest.writeString(this.created_by);
@@ -161,14 +174,12 @@ public class FindPatientsBean implements Parcelable {
         dest.writeInt(this.id);
     }
 
-    public FindPatientsBean() {
-    }
-
     protected FindPatientsBean(Parcel in) {
         this.supervise_person = in.readString();
         this.created_time = in.readString();
         this.updated_time = in.readString();
         this.gender = in.readString();
+        this.age = in.readString();
         this.level = in.readString();
         this.condition_type = in.readString();
         this.created_by = in.readString();
@@ -180,7 +191,7 @@ public class FindPatientsBean implements Parcelable {
         this.id = in.readInt();
     }
 
-    public static final Parcelable.Creator<FindPatientsBean> CREATOR = new Parcelable.Creator<FindPatientsBean>() {
+    public static final Creator<FindPatientsBean> CREATOR = new Creator<FindPatientsBean>() {
         @Override
         public FindPatientsBean createFromParcel(Parcel source) {
             return new FindPatientsBean(source);

@@ -76,8 +76,10 @@ public class PeopleMsgActivity extends BaseActivity {
             public void onSuccess(Response<FindPatientsBean> response) {
                 mBean = response.body();
                 tvName.setText(mBean.getName());
-                tv_gender_condition_type.setText(mBean.getGender() + "  " + mBean.getCondition_type());
-                tv_identity_card.setText("身份证号: " + mBean.getIdentity_card());
+                tv_gender_condition_type.setText(mBean.getGender() + "  "
+                        + mBean.getAge() + "岁  "
+                        + mBean.getCondition_type());
+                tv_identity_card.setText("身份证号 : " + mBean.getIdentity_card());
                 showFragment();
             }
         });

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.bril.keypersonsupervision.R;
 
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
@@ -92,5 +93,20 @@ public class KUtil {
         currentLocationOverlay.setFocusItemsOnTap(true);
         mapView.getOverlays().add(currentLocationOverlay);
         mapView.getController().setCenter(currentLocation);
+    }
+
+    /**
+     * 矩形字符串
+     */
+    public static String getPointStr(IGeoPoint upper, IGeoPoint lower, IGeoPoint righter, IGeoPoint lefter) {
+        //        double[] upperDoubles = CoordinateConverter.transformWgs2Gcj(upper.getLatitude(), upper.getLongitude());
+//        double[] lowerDoubles = CoordinateConverter.transformWgs2Gcj(lower.getLatitude(), lower.getLongitude());
+//        double[] righterrDoubles = CoordinateConverter.transformWgs2Gcj(righter.getLatitude(), righter.getLongitude());
+//        double[] lefterDoubles = CoordinateConverter.transformWgs2Gcj(lefter.getLatitude(), lefter.getLongitude());
+        return String.valueOf(upper.getLatitude()) + "," + upper.getLongitude() + "," +
+                lower.getLatitude() + "," + lower.getLongitude() + "," +
+                righter.getLatitude() + "," + righter.getLongitude() + "," +
+                lefter.getLatitude() + "," + lefter.getLongitude();
+
     }
 }

@@ -37,7 +37,7 @@ import java.util.List;
 public class Polygon extends OverlayWithIW {
 
 	private final Path mPath = new Path(); //Path drawn is kept for click detection
-	private LinearRing mOutline = new LinearRing(mPath);
+	public LinearRing mOutline = new LinearRing(mPath);
 	private ArrayList<LinearRing> mHoles = new ArrayList<>();
 	protected OnClickListener mOnClickListener;
 	/** Paint settings. */

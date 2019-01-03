@@ -29,7 +29,7 @@
                 android:drawableTop="@mipmap/ic_add"
                 android:drawablePadding="3dp"
                 android:gravity="center"
-                android:text="圆形"
+                android:text="多边形"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12" />
 

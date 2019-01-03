@@ -102,10 +102,17 @@ public class MainActivity extends BaseActivity {
     private void showhodlePieChart(SelectHistoryStatisticsBean body) {
         // 设置每份所占数量
         List<PieEntry> yvals = new ArrayList<>();
-        yvals.add(new PieEntry(body.getBlueArea() != 0 ? body.getBlueArea() : 1));
-        yvals.add(new PieEntry(body.getOrangeArea() != 0 ? body.getOrangeArea() : 1));
-        yvals.add(new PieEntry(body.getRedArea() != 0 ? body.getRedArea() : 1));
-        yvals.add(new PieEntry(body.getIntrusionZone() != 0 ? body.getIntrusionZone() : 1));
+        if (body.getBlueArea() != 0 || body.getOrangeArea() != 0 || body.getRedArea() != 0 || body.getIntrusionZone() != 0) {
+            yvals.add(new PieEntry(body.getBlueArea()));
+            yvals.add(new PieEntry(body.getOrangeArea()));
+            yvals.add(new PieEntry(body.getRedArea()));
+            yvals.add(new PieEntry(body.getIntrusionZone()));
+        } else {
+            yvals.add(new PieEntry(1));
+            yvals.add(new PieEntry(1));
+            yvals.add(new PieEntry(1));
+            yvals.add(new PieEntry(1));
+        }
         //设置每份的颜色
         List<Integer> colors = new ArrayList<>();
         colors.add(mActivity.getResources().getColor(R.color.blue_shape));
