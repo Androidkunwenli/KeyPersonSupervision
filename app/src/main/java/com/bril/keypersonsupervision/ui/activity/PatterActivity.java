@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
@@ -18,6 +20,12 @@ public class PatterActivity extends BaseActivity {
     ImageView imageNews;
     @BindView(R.id.rec_list)
     RecyclerView recList;
+    @BindView(R.id.rb_commonly)
+    RadioButton rbCommonly;
+    @BindView(R.id.rb_vigilance)
+    RadioButton rbVigilance;
+    @BindView(R.id.rg_patter)
+    RadioGroup rgPatter;
 
     public static void start(BaseActivity activity) {
         activity.startActivity(new Intent(activity, PatterActivity.class));
@@ -30,7 +38,6 @@ public class PatterActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
     }
 
     @Override

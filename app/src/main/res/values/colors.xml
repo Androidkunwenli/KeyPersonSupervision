@@ -28,5 +28,6 @@
     <color name="map_red">#80FF0000</color>
     <color name="map_orange">#80FFA500</color>
     <color name="map_blue">#8000CDDB</color>
+    <color name="patter">#33CCFF</color>
 
 </resources>
