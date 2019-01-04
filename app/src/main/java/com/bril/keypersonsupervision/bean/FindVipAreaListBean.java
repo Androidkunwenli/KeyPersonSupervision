@@ -1,6 +1,9 @@
 package com.bril.keypersonsupervision.bean;
 
-public class FindVipAreaListBean {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class FindVipAreaListBean implements Parcelable {
 
     /**
      * area_name : string
@@ -95,4 +98,49 @@ public class FindVipAreaListBean {
     public void setCreated_by(String created_by) {
         this.created_by = created_by;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.area_name);
+        dest.writeString(this.created_time);
+        dest.writeString(this.updated_time);
+        dest.writeString(this.updated_by);
+        dest.writeInt(this.vip_Level);
+        dest.writeInt(this.id);
+        dest.writeString(this.area_remake);
+        dest.writeString(this.area_position);
+        dest.writeString(this.created_by);
+    }
+
+    public FindVipAreaListBean() {
+    }
+
+    protected FindVipAreaListBean(Parcel in) {
+        this.area_name = in.readString();
+        this.created_time = in.readString();
+        this.updated_time = in.readString();
+        this.updated_by = in.readString();
+        this.vip_Level = in.readInt();
+        this.id = in.readInt();
+        this.area_remake = in.readString();
+        this.area_position = in.readString();
+        this.created_by = in.readString();
+    }
+
+    public static final Parcelable.Creator<FindVipAreaListBean> CREATOR = new Parcelable.Creator<FindVipAreaListBean>() {
+        @Override
+        public FindVipAreaListBean createFromParcel(Parcel source) {
+            return new FindVipAreaListBean(source);
+        }
+
+        @Override
+        public FindVipAreaListBean[] newArray(int size) {
+            return new FindVipAreaListBean[size];
+        }
+    };
 }

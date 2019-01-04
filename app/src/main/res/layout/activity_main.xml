@@ -67,7 +67,7 @@
                 android:gravity="center"
                 android:paddingLeft="13dp"
                 android:paddingRight="13dp"
-                android:text="蓝色区域出现5人"
+                android:text="蓝色区域出现0人"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
 
@@ -82,7 +82,7 @@
                 android:gravity="center"
                 android:paddingLeft="13dp"
                 android:paddingRight="13dp"
-                android:text="橙色区域出现5人"
+                android:text="橙色区域出现0人"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
 
@@ -97,7 +97,7 @@
                 android:gravity="center"
                 android:paddingLeft="13dp"
                 android:paddingRight="13dp"
-                android:text="红色区域出现5人"
+                android:text="红色区域出现0人"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
 
@@ -111,7 +111,7 @@
                 android:gravity="center"
                 android:paddingLeft="13dp"
                 android:paddingRight="13dp"
-                android:text="入侵重点管辖区5人"
+                android:text="入侵重点管辖区0人"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
         </LinearLayout>

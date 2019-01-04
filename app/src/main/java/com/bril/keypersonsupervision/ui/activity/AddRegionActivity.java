@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
 import com.bril.keypersonsupervision.bean.DrawBaseModel;
+import com.bril.keypersonsupervision.bean.FindVipAreaListBean;
 import com.bril.keypersonsupervision.view.EditRegionFragment;
 import com.bril.keypersonsupervision.widgets.SectorPathOverlay;
 import com.orhanobut.logger.Logger;
@@ -38,9 +39,12 @@ public class AddRegionActivity extends BaseActivity {
     TextView tvSure;
     private SectorPathOverlay mPathOverlay;
     private MarkerPolygon mPolygon;
+    private FindVipAreaListBean mBean;
 
-    public static void start(BaseActivity activity) {
-        activity.startActivity(new Intent(activity, AddRegionActivity.class));
+    public static void start(BaseActivity activity, FindVipAreaListBean bean) {
+        Intent intent = new Intent(activity, AddRegionActivity.class);
+        intent.putExtra("bean", bean);
+        activity.startActivity(intent);
     }
 
     @Override
@@ -50,6 +54,7 @@ public class AddRegionActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mBean = getIntent().getParcelableExtra("bean");
     }
 
     private static final String TAG = "AddRegionActivity";
@@ -137,11 +142,13 @@ public class AddRegionActivity extends BaseActivity {
                     ToastUtils.showShort("请绘制重点区域!");
                     return;
                 }
-                if (mPolygon != null) {
+                if (mPolygon != null && !mPolygon.getPoints().isEmpty()) {
                     StringBuilder buffer = new StringBuilder();
                     for (GeoPoint point : mPolygon.getPoints()) {
                         buffer.append(point.getLongitude()).append(",").append(point.getLatitude()).append(",");
                     }
+                    GeoPoint geoPoint = mPolygon.getPoints().get(0);
+                    buffer.append(geoPoint.getLongitude()).append(",").append(geoPoint.getLatitude());
                     coordinate = buffer.toString();
                     areatype = "3";
                 }
@@ -149,7 +156,10 @@ public class AddRegionActivity extends BaseActivity {
                     areatype = "2";
                 }
                 EditRegionFragment editRegionFragment = new EditRegionFragment();
-                editRegionFragment.setCoordinate(coordinate,areatype);
+                editRegionFragment.setCoordinate(coordinate, areatype);
+                if (mBean != null) {
+                    editRegionFragment.setId(mBean.getId(), mBean.getArea_name());
+                }
                 editRegionFragment.show(getSupportFragmentManager(), "editRegionFragment");
                 break;
         }

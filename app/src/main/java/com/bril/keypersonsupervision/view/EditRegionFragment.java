@@ -42,10 +42,18 @@ public class EditRegionFragment extends DialogFragment {
         Spinner sp_vip_level = v.findViewById(R.id.sp_vip_level);
         Spinner sp_area_remake = v.findViewById(R.id.sp_area_remake);
         CheckBox cb_upload_heart_rate = v.findViewById(R.id.cb_upload_heart_rate);
+        et_name.setText(bean.getAreaName());
         sp_vip_level.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                bean.setVipLevel(position + 1);
+                switch (getResources().getStringArray(R.array.region)[position]) {
+                    case "蓝色区域":
+                        bean.setVipLevel(1);
+                        break;
+                    case "红色区域":
+                        bean.setVipLevel(3);
+                        break;
+                }
             }
 
             @Override
@@ -65,6 +73,11 @@ public class EditRegionFragment extends DialogFragment {
             }
         });
         TextView tv_sure = v.findViewById(R.id.tv_sure);
+        if (bean.getId() != 0) {
+            tv_sure.setText("修改");
+        } else {
+            tv_sure.setText("确定");
+        }
         tv_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +106,11 @@ public class EditRegionFragment extends DialogFragment {
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
             dialog.getWindow().setLayout((int) (dm.widthPixels * 0.8), ViewGroup.LayoutParams.WRAP_CONTENT);
         }
+    }
+
+    public void setId(int id, String area_name) {
+        bean.setId(id);
+        bean.setAreaName(area_name);
     }
 
     public void setCoordinate(String coordinate, String areatype) {

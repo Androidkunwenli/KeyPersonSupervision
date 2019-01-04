@@ -33,7 +33,7 @@ public class AnalysisActivity extends BaseActivity {
     public void initView() {
         getSupportFragmentManager()    //
                 .beginTransaction()
-                .add(R.id.fl_layout, new AnalysisFragment())   // 此处的R.id.fragment_container是要盛放fragment的父容器
+                .add(R.id.fl_layout, AnalysisFragment.newInstance(null, true))   // 此处的R.id.fragment_container是要盛放fragment的父容器
                 .commit();
     }
 

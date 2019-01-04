@@ -84,6 +84,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        showhodlePieChart(null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         HttpUtils.selectPatientsLocation(mActivity, new JsonCallback<List<SelectPatientsLocationBean>>() {
             @Override
             public void onSuccess(Response<List<SelectPatientsLocationBean>> response) {
@@ -102,11 +108,15 @@ public class MainActivity extends BaseActivity {
     private void showhodlePieChart(SelectHistoryStatisticsBean body) {
         // 设置每份所占数量
         List<PieEntry> yvals = new ArrayList<>();
-        if (body.getBlueArea() != 0 || body.getOrangeArea() != 0 || body.getRedArea() != 0 || body.getIntrusionZone() != 0) {
+        if (body != null && (body.getBlueArea() != 0 || body.getOrangeArea() != 0 || body.getRedArea() != 0 || body.getIntrusionZone() != 0)) {
             yvals.add(new PieEntry(body.getBlueArea()));
             yvals.add(new PieEntry(body.getOrangeArea()));
             yvals.add(new PieEntry(body.getRedArea()));
             yvals.add(new PieEntry(body.getIntrusionZone()));
+            tvBlue.setText("蓝色区域出现" + body.getBlueArea() + "次");
+            tvOrange.setText("橙色区域出现" + body.getOrangeArea() + "次");
+            tvRed.setText("红色区域出现" + body.getRedArea() + "次");
+            tvIntrusion.setText("入侵重点管辖区" + body.getIntrusionZone() + "人");
         } else {
             yvals.add(new PieEntry(1));
             yvals.add(new PieEntry(1));
@@ -121,10 +131,6 @@ public class MainActivity extends BaseActivity {
         colors.add(mActivity.getResources().getColor(R.color.red_key_shape));
         PieChartManagger pieChartManagger = new PieChartManagger(pieChart);
         pieChartManagger.showSolidPieChart(yvals, colors);
-        tvBlue.setText("蓝色区域出现" + body.getBlueArea() + "次");
-        tvOrange.setText("橙色区域出现" + body.getOrangeArea() + "次");
-        tvRed.setText("红色区域出现" + body.getRedArea() + "次");
-        tvIntrusion.setText("入侵重点管辖区" + body.getIntrusionZone() + "人");
     }
 
     @OnClick({R.id.image_news, R.id.tv_map, R.id.tv_trajectory, R.id.tv_equipment,

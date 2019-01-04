@@ -46,6 +46,7 @@ public class HttpUtils {
     public static <T> void findPatients(Context context, JsonCallback<T> jsonCallback) {
         OkGo.<T>get(ConfigUrl.findPatients)
                 .tag(context)
+                .params("buffer", "1")
                 .params("supervisePerson", "string")
                 .execute(jsonCallback);
     }
@@ -134,10 +135,20 @@ public class HttpUtils {
                 .execute(jsonCallback);
     }
 
+    /**
+     * 新增重点区域
+     */
     public static <T> void addVipArea(Context context, AddVipAreaBean bean,
                                       JsonCallback<T> jsonCallback) {
-        OkGo.<T>post(ConfigUrl.addVipArea)
+        OkGo.<T>post(bean.getId() != 0 ? ConfigUrl.updateVipArea : ConfigUrl.addVipArea)
                 .tag(context).upJson(new Gson().toJson(bean)).execute(jsonCallback);
+    }
 
+    /**
+     * 删除重点区域
+     */
+    public static <T> void delVipArea(Context context, int id, JsonCallback<T> jsonCallback) {
+        OkGo.<T>get(ConfigUrl.delVipArea)
+                .tag(context).params("id", id).execute(jsonCallback);
     }
 }

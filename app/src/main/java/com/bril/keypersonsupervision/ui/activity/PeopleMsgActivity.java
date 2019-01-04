@@ -88,7 +88,7 @@ public class PeopleMsgActivity extends BaseActivity {
     private void showFragment() {
         ArrayList<Fragment> fragmentList = new ArrayList<>();
         ArrayList<String> list_Title = new ArrayList<>();
-        fragmentList.add(AnalysisFragment.newInstance(mId));
+        fragmentList.add(AnalysisFragment.newInstance(mId, false));
         fragmentList.add(RecordFragment.newInstance(mId));
         fragmentList.add(GuardianMsgFragment.newInstance(mBean));
         fragmentList.add(MapPositionFragment.newInstance(mId));

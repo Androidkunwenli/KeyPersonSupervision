@@ -12,7 +12,10 @@ public class RegionListAdapter extends BaseQuickAdapter<FindVipAreaListBean, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, FindVipAreaListBean item) {
-        helper.setText(R.id.tv_describe, item.getArea_name() + " " + item.getArea_remake());
+        helper.setText(R.id.tv_describe, item.getArea_name() + " " + item.getArea_remake())
+                .addOnClickListener(R.id.tv_see)
+                .addOnClickListener(R.id.tv_edit)
+                .addOnClickListener(R.id.tv_delete);
         switch (item.getVip_Level()) {
             case 1:
                 helper.setBackgroundRes(R.id.ll_layout, R.color.map_blue);

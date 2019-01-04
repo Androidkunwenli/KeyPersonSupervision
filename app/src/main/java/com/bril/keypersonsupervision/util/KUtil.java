@@ -106,7 +106,7 @@ public class KUtil {
         return String.valueOf(upper.getLongitude()) + "," + upper.getLatitude() + "," +
                 lower.getLongitude() + "," + lower.getLatitude() + "," +
                 righter.getLongitude() + "," + righter.getLatitude() + "," +
-                lefter.getLongitude() + "," + lefter.getLatitude();
+                lefter.getLongitude() + "," + lefter.getLatitude() + "," + upper.getLongitude() + "," + upper.getLatitude();
 
     }
 }

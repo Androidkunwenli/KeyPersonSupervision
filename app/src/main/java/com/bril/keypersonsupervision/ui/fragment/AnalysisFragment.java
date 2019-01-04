@@ -3,6 +3,8 @@ package com.bril.keypersonsupervision.ui.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseFragment;
@@ -26,13 +28,17 @@ public class AnalysisFragment extends BaseFragment {
     CircularProgressView mProView;
     @BindView(R.id.line_chart)
     LineChart mLineChart;
+    @BindView(R.id.ll_layout)
+    LinearLayout llLayout;
     private String mOsId;
+    private boolean showWear;
 
     //传输数据
-    public static AnalysisFragment newInstance(String osId) {
+    public static AnalysisFragment newInstance(String osId, boolean showWear) {
         AnalysisFragment f = new AnalysisFragment();
         Bundle b = new Bundle();
         b.putString("osId", osId);
+        b.putBoolean("showWear", showWear);
         f.setArguments(b);
         return f;
     }
@@ -43,6 +49,7 @@ public class AnalysisFragment extends BaseFragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             mOsId = arguments.getString("osId");
+            showWear = arguments.getBoolean("showWear", false);
         }
     }
 
@@ -57,6 +64,7 @@ public class AnalysisFragment extends BaseFragment {
         showhodlePieChart();
         mProView.setProgress(0.9f);
         showAlone();
+        llLayout.setVisibility(showWear ? View.VISIBLE : View.GONE);
     }
 
     private void showAlone() {

@@ -1,6 +1,8 @@
 package com.bril.keypersonsupervision.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,12 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
 import com.bril.keypersonsupervision.bean.FindVipAreaListBean;
 import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.ui.adapter.RegionListAdapter;
 import com.bril.keypersonsupervision.util.HttpUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzy.okgo.model.Response;
 
 import org.osmdroid.util.GeoPoint;
@@ -52,15 +56,68 @@ public class SetActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mapView.getController().setCenter(new GeoPoint(38.04487619383014, 114.47731912136078));
         recList.setLayoutManager(new LinearLayoutManager(mActivity));
         mAdapter = new RegionListAdapter();
         recList.setAdapter(mAdapter);
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                FindVipAreaListBean bean = (FindVipAreaListBean) adapter.getData().get(position);
+                switch (view.getId()) {
+                    case R.id.tv_delete:
+                        AlertDialog.Builder normalDialog =
+                                new AlertDialog.Builder(mActivity);
+                        normalDialog.setTitle("温馨提示");
+                        normalDialog.setMessage("确定要删除" + bean.getArea_name() + "区域吗？");
+                        normalDialog.setPositiveButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        HttpUtils.delVipArea(mActivity, bean.getId(), new JsonCallback<Boolean>() {
+                                            @Override
+                                            public void onSuccess(Response<Boolean> response) {
+                                                if (response.body()) {
+                                                    ToastUtils.showShort("删除区域成功！");
+                                                    onResume();
+                                                }
+                                            }
+                                        });
+                                        dialog.dismiss();
+                                    }
+                                });
+                        normalDialog.setNegativeButton("取消", null);
+                        // 显示
+                        normalDialog.show();
+                        break;
+                    case R.id.tv_edit:
+                        AddRegionActivity.start(mActivity,bean);
+                        break;
+                    case R.id.tv_see:
+                        String[] split = bean.getArea_position().split(",");
+                        String la = null;
+                        String lo = null;
+                        for (int i1 = 0; i1 < split.length; i1++) {
+                            if ((i1 & 1) != 1) {
+                                lo = split[i1];
+                            } else {
+                                la = split[i1];
+                            }
+                            if (lo != null && la != null) {
+                                recList.setVisibility(View.GONE);
+                                mapView.getController().setCenter(new GeoPoint(Double.valueOf(la), Double.valueOf(lo)));
+                            }
+                        }
+                        break;
+                }
+
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mapView.getController().setCenter(new GeoPoint(38.04487619383014, 114.47731912136078));
         HttpUtils.findVipAreaList(mActivity, new JsonCallback<List<FindVipAreaListBean>>() {
             @Override
             public void onSuccess(Response<List<FindVipAreaListBean>> response) {
@@ -73,6 +130,7 @@ public class SetActivity extends BaseActivity {
     }
 
     private void showMap(List<FindVipAreaListBean> body) {
+        mapView.getOverlays().clear();
         for (FindVipAreaListBean areaListBean : body) {
             String[] split = areaListBean.getArea_position().split(",");
             Polygon polygon = new Polygon();
@@ -131,7 +189,7 @@ public class SetActivity extends BaseActivity {
                 NewsActivity.start(mActivity);
                 break;
             case R.id.tv_add_region:
-                AddRegionActivity.start(mActivity);
+                AddRegionActivity.start(mActivity,null);
                 break;
             case R.id.tv_list_region:
                 recList.setVisibility(View.VISIBLE == recList.getVisibility() ? View.GONE : View.VISIBLE);

@@ -1,9 +1,6 @@
 package com.bril.keypersonsupervision.ui.activity;
 
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,9 +16,12 @@ import com.bril.keypersonsupervision.util.HttpUtils;
 import com.lzy.okgo.model.Response;
 
 import org.osmdroid.config.Configuration;
-import org.osmdroid.views.MapController;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.OverlayItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -70,13 +70,27 @@ public class PositionActivity extends BaseActivity {
         if (mMapView != null) {
             mMapView.onResume();
         }
-        HttpUtils.selectPatient(mActivity, "string", new JsonCallback<List<SelectPatientBean>>() {
-            @Override
-            public void onSuccess(Response<List<SelectPatientBean>> response) {
-                mAdapter.setNewData(response.body());
-            }
-        });
+        HttpUtils.selectPatient(mActivity, "string",
+                new JsonCallback<List<SelectPatientBean>>() {
+                    @Override
+                    public void onSuccess(Response<List<SelectPatientBean>> response) {
+                        List<SelectPatientBean> body = response.body();
+                        ArrayList<OverlayItem> items = new ArrayList<>();
+                        mAdapter.setNewData(body);
+                        for (SelectPatientBean bean : body) {
+                            items.add(new OverlayItem(bean.getName() + "  心率" + bean.getHeartrate() + "次/分", bean.getCreated_time(),
+                                    new GeoPoint(Double.valueOf(bean.getLatitude()), Double.valueOf(bean.getLongitude()))));
+                        }
+                        mMyLocationOverlay = new ItemizedOverlayWithFocus<>(items, null, getApplicationContext());
+                        mMyLocationOverlay.setFocusItemsOnTap(true);
+                        mMyLocationOverlay.setFocusedItem(0);
+                        mMapView.getOverlays().add(mMyLocationOverlay);
+                    }
+                });
     }
+
+    private ItemizedOverlayWithFocus<OverlayItem> mMyLocationOverlay;
+
 
     @Override
     public void onPause() {
@@ -97,31 +111,6 @@ public class PositionActivity extends BaseActivity {
             case R.id.image_news:
                 NewsActivity.start(mActivity);
                 break;
-        }
-    }
-
-    private class GeoUpdateListener implements LocationListener {
-        public GeoUpdateListener(MapController pMapController) {
-        }
-
-        @Override
-        public void onLocationChanged(Location location) {
-
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-
         }
     }
 }

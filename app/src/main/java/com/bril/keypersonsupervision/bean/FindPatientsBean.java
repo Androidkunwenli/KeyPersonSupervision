@@ -5,57 +5,40 @@ import android.os.Parcelable;
 
 public class FindPatientsBean implements Parcelable {
 
+
     /**
      * supervise_person : string
-     * created_time : 2018-12-17T06:17:57.000+0000
-     * updated_time : 2018-12-17T07:33:46.000+0000
+     * created_time : 2018-12-29T09:35:05.000+0000
      * gender : 男
-     * level : 1
-     * condition_type : 精神分裂症
-     * created_by :
-     * identity_card : 130185186512012475
-     * patients_type : 1
-     * equip_id : 3929642628
-     * name : 病人1
-     * updated_by :
-     * id : 1
+     * level : 5
+     * condition_type : 癫痫所致精神障碍
+     * created_by : string
+     * identity_card : 130482100005040013
+     * patients_type : 轻微滋事
+     * blueArea : 0
+     * equip_id : 23
+     * name : 钱昆纬
+     * orangeArea : 0
+     * id : 16
+     * redArea : 0
+     * age : 1019
      */
 
     private String supervise_person;
     private String created_time;
-    private String updated_time;
     private String gender;
-    private String age;
     private String level;
     private String condition_type;
     private String created_by;
     private String identity_card;
     private String patients_type;
+    private int blueArea;
     private String equip_id;
     private String name;
-    private String updated_by;
+    private int orangeArea;
     private int id;
-    private boolean isChoice;
-
-    public boolean isChoice() {
-        return isChoice;
-    }
-
-    public void setChoice(boolean choice) {
-        isChoice = choice;
-    }
-
-    public static Creator<FindPatientsBean> getCREATOR() {
-        return CREATOR;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
+    private int redArea;
+    private int age;
 
     public String getSupervise_person() {
         return supervise_person;
@@ -71,14 +54,6 @@ public class FindPatientsBean implements Parcelable {
 
     public void setCreated_time(String created_time) {
         this.created_time = created_time;
-    }
-
-    public String getUpdated_time() {
-        return updated_time;
-    }
-
-    public void setUpdated_time(String updated_time) {
-        this.updated_time = updated_time;
     }
 
     public String getGender() {
@@ -129,6 +104,14 @@ public class FindPatientsBean implements Parcelable {
         this.patients_type = patients_type;
     }
 
+    public int getBlueArea() {
+        return blueArea;
+    }
+
+    public void setBlueArea(int blueArea) {
+        this.blueArea = blueArea;
+    }
+
     public String getEquip_id() {
         return equip_id;
     }
@@ -145,12 +128,12 @@ public class FindPatientsBean implements Parcelable {
         this.name = name;
     }
 
-    public String getUpdated_by() {
-        return updated_by;
+    public int getOrangeArea() {
+        return orangeArea;
     }
 
-    public void setUpdated_by(String updated_by) {
-        this.updated_by = updated_by;
+    public void setOrangeArea(int orangeArea) {
+        this.orangeArea = orangeArea;
     }
 
     public int getId() {
@@ -161,7 +144,20 @@ public class FindPatientsBean implements Parcelable {
         this.id = id;
     }
 
-    public FindPatientsBean() {
+    public int getRedArea() {
+        return redArea;
+    }
+
+    public void setRedArea(int redArea) {
+        this.redArea = redArea;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     @Override
@@ -173,37 +169,40 @@ public class FindPatientsBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.supervise_person);
         dest.writeString(this.created_time);
-        dest.writeString(this.updated_time);
         dest.writeString(this.gender);
-        dest.writeString(this.age);
         dest.writeString(this.level);
         dest.writeString(this.condition_type);
         dest.writeString(this.created_by);
         dest.writeString(this.identity_card);
         dest.writeString(this.patients_type);
+        dest.writeInt(this.blueArea);
         dest.writeString(this.equip_id);
         dest.writeString(this.name);
-        dest.writeString(this.updated_by);
+        dest.writeInt(this.orangeArea);
         dest.writeInt(this.id);
-        dest.writeByte(this.isChoice ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.redArea);
+        dest.writeInt(this.age);
+    }
+
+    public FindPatientsBean() {
     }
 
     protected FindPatientsBean(Parcel in) {
         this.supervise_person = in.readString();
         this.created_time = in.readString();
-        this.updated_time = in.readString();
         this.gender = in.readString();
-        this.age = in.readString();
         this.level = in.readString();
         this.condition_type = in.readString();
         this.created_by = in.readString();
         this.identity_card = in.readString();
         this.patients_type = in.readString();
+        this.blueArea = in.readInt();
         this.equip_id = in.readString();
         this.name = in.readString();
-        this.updated_by = in.readString();
+        this.orangeArea = in.readInt();
         this.id = in.readInt();
-        this.isChoice = in.readByte() != 0;
+        this.redArea = in.readInt();
+        this.age = in.readInt();
     }
 
     public static final Creator<FindPatientsBean> CREATOR = new Creator<FindPatientsBean>() {

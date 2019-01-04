@@ -27,6 +27,7 @@
         android:paddingBottom="8dp">
 
         <TextView
+            android:id="@+id/tv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -36,6 +37,7 @@
             android:textSize="@dimen/sp_14" />
 
         <TextView
+            android:id="@+id/tv_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -45,6 +47,7 @@
             android:textSize="@dimen/sp_14" />
 
         <TextView
+            android:id="@+id/tv_see"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
