@@ -103,10 +103,10 @@ public class KUtil {
 //        double[] lowerDoubles = CoordinateConverter.transformWgs2Gcj(lower.getLatitude(), lower.getLongitude());
 //        double[] righterrDoubles = CoordinateConverter.transformWgs2Gcj(righter.getLatitude(), righter.getLongitude());
 //        double[] lefterDoubles = CoordinateConverter.transformWgs2Gcj(lefter.getLatitude(), lefter.getLongitude());
-        return String.valueOf(upper.getLatitude()) + "," + upper.getLongitude() + "," +
-                lower.getLatitude() + "," + lower.getLongitude() + "," +
-                righter.getLatitude() + "," + righter.getLongitude() + "," +
-                lefter.getLatitude() + "," + lefter.getLongitude();
+        return String.valueOf(upper.getLongitude()) + "," + upper.getLatitude() + "," +
+                lower.getLongitude() + "," + lower.getLatitude() + "," +
+                righter.getLongitude() + "," + righter.getLatitude() + "," +
+                lefter.getLongitude() + "," + lefter.getLatitude();
 
     }
 }

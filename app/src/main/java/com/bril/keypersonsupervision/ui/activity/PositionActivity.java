@@ -59,12 +59,7 @@ public class PositionActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        HttpUtils.selectPatient(mActivity, "string", new JsonCallback<List<SelectPatientBean>>() {
-            @Override
-            public void onSuccess(Response<List<SelectPatientBean>> response) {
-                mAdapter.setNewData(response.body());
-            }
-        });
+
     }
 
     @Override
@@ -75,6 +70,12 @@ public class PositionActivity extends BaseActivity {
         if (mMapView != null) {
             mMapView.onResume();
         }
+        HttpUtils.selectPatient(mActivity, "string", new JsonCallback<List<SelectPatientBean>>() {
+            @Override
+            public void onSuccess(Response<List<SelectPatientBean>> response) {
+                mAdapter.setNewData(response.body());
+            }
+        });
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.bril.keypersonsupervision.widgets.SectorPathOverlay;
 import com.orhanobut.logger.Logger;
 
 import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MarkerPolygon;
 
@@ -88,6 +89,7 @@ public class AddRegionActivity extends BaseActivity {
                     mapView.getOverlays().remove(mPathOverlay);
                     mapView.invalidate();
                     mPathOverlay = null;
+                    coordinate = null;
                 }
                 break;
             case R.id.tv_rect:
@@ -102,6 +104,7 @@ public class AddRegionActivity extends BaseActivity {
                     @Override
                     public void drawRectangleListener(String pointStr) {
                         Logger.i("pointStr = " + pointStr);
+                        coordinate = pointStr;
                     }
                 });
                 mPathOverlay.setType(DrawBaseModel.TPEY_RECT);
@@ -111,6 +114,7 @@ public class AddRegionActivity extends BaseActivity {
                     mapView.getOverlays().remove(mPolygon);
                     mapView.invalidate();
                     mPolygon = null;
+                    coordinate = null;
                 }
                 break;
             case R.id.tv_delete:
@@ -129,14 +133,30 @@ public class AddRegionActivity extends BaseActivity {
                 break;
             case R.id.tv_sure:
                 if (mPolygon == null && mPathOverlay == null) {
+                    coordinate = null;
                     ToastUtils.showShort("请绘制重点区域!");
                     return;
                 }
+                if (mPolygon != null) {
+                    StringBuilder buffer = new StringBuilder();
+                    for (GeoPoint point : mPolygon.getPoints()) {
+                        buffer.append(point.getLongitude()).append(",").append(point.getLatitude()).append(",");
+                    }
+                    coordinate = buffer.toString();
+                    areatype = "3";
+                }
+                if (mPathOverlay != null) {
+                    areatype = "2";
+                }
                 EditRegionFragment editRegionFragment = new EditRegionFragment();
+                editRegionFragment.setCoordinate(coordinate,areatype);
                 editRegionFragment.show(getSupportFragmentManager(), "editRegionFragment");
                 break;
         }
     }
+
+    private String coordinate;
+    private String areatype;
 
     @Override
     protected void onDestroy() {

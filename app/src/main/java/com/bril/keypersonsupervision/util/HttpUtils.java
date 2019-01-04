@@ -3,6 +3,7 @@ package com.bril.keypersonsupervision.util;
 import android.content.Context;
 
 import com.bril.keypersonsupervision.bean.AddPatientBean;
+import com.bril.keypersonsupervision.bean.AddVipAreaBean;
 import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -45,7 +46,7 @@ public class HttpUtils {
     public static <T> void findPatients(Context context, JsonCallback<T> jsonCallback) {
         OkGo.<T>get(ConfigUrl.findPatients)
                 .tag(context)
-                .params("param", "string")
+                .params("supervisePerson", "string")
                 .execute(jsonCallback);
     }
 
@@ -123,7 +124,7 @@ public class HttpUtils {
     /**
      * 重点人员实时轨迹
      */
-    public static <T> void findPatientTrajectory(Context context, String startTime, String id, String endTime,
+    public static <T> void findPatientTrajectory(Context context, String startTime, int id, String endTime,
                                                  JsonCallback<T> jsonCallback) {
         OkGo.<T>get(ConfigUrl.findPatientTrajectory)
                 .tag(context)
@@ -131,5 +132,12 @@ public class HttpUtils {
                 .params("id", id)
                 .params("endTime", endTime)
                 .execute(jsonCallback);
+    }
+
+    public static <T> void addVipArea(Context context, AddVipAreaBean bean,
+                                      JsonCallback<T> jsonCallback) {
+        OkGo.<T>post(ConfigUrl.addVipArea)
+                .tag(context).upJson(new Gson().toJson(bean)).execute(jsonCallback);
+
     }
 }

@@ -26,5 +26,7 @@
     <color name="black_transparent">#80000000</color>
     <color name="split_line">#cccccc</color>
     <color name="map_red">#80FF0000</color>
+    <color name="map_orange">#80FFA500</color>
+    <color name="map_blue">#8000CDDB</color>
 
 </resources>

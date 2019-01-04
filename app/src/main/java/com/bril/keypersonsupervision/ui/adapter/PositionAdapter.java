@@ -13,8 +13,8 @@ public class PositionAdapter extends BaseQuickAdapter<SelectPatientBean, BaseVie
     @Override
     protected void convert(BaseViewHolder helper, SelectPatientBean item) {
         helper.setText(R.id.tv_name, item.getName())
-                .setText(R.id.tv_gender, item.getGender() + " " + item.getCondition_type())
-                .setText(R.id.tv_battery, item.getData_type() + "%电量")
-                .setText(R.id.tv_position,"当前位置 : 经度 : ");
+                .setText(R.id.tv_gender, item.getGender() + " " + item.getAge() + "岁 " + item.getCondition_type())
+                .setText(R.id.tv_battery, item.getElectricity() + "%电量")
+                .setText(R.id.tv_position, "当前位置 : 经度 : " + item.getLongitude() + " 纬度 : " + item.getLatitude());
     }
 }

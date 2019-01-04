@@ -8,9 +8,14 @@ import android.widget.ImageView;
 
 import com.bril.keypersonsupervision.R;
 import com.bril.keypersonsupervision.base.BaseActivity;
+import com.bril.keypersonsupervision.bean.SelectPatientBean;
+import com.bril.keypersonsupervision.callback.JsonCallback;
 import com.bril.keypersonsupervision.ui.adapter.StatisticsAdapter;
+import com.bril.keypersonsupervision.util.HttpUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lzy.okgo.model.Response;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,6 +27,7 @@ public class StatisticsActivity extends BaseActivity {
     ImageView imageNews;
     @BindView(R.id.rec_list)
     RecyclerView recList;
+    private StatisticsAdapter mAdapter;
 
     public static void start(BaseActivity activity) {
         activity.startActivity(new Intent(activity, StatisticsActivity.class));
@@ -35,19 +41,37 @@ public class StatisticsActivity extends BaseActivity {
     @Override
     public void initView() {
         recList.setLayoutManager(new LinearLayoutManager(mActivity));
-        StatisticsAdapter adapter = new StatisticsAdapter();
-        recList.setAdapter(adapter);
-        ArrayList<String> data = new ArrayList<>();
-        data.add("");
-        data.add("");
-        data.add("");
-        data.add("");
-        adapter.setNewData(data);
+        mAdapter = new StatisticsAdapter();
+        recList.setAdapter(mAdapter);
+
     }
 
     @Override
     public void initData() {
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.image_choice:
+                        SelectPatientBean bean = (SelectPatientBean) adapter.getData().get(position);
+                        bean.setChoice(!bean.isChoice());
+                        adapter.notifyDataSetChanged();
+                        break;
+                }
+            }
+        });
+    }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        HttpUtils.selectPatient(mActivity, "string", new JsonCallback<List<SelectPatientBean>>() {
+            @Override
+            public void onSuccess(Response<List<SelectPatientBean>> response) {
+                mAdapter.setNewData(response.body());
+            }
+        });
     }
 
     @OnClick({R.id.image_return, R.id.image_news, R.id.tv_confirm})

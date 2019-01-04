@@ -35,6 +35,19 @@ public class FindPatientsBean implements Parcelable {
     private String name;
     private String updated_by;
     private int id;
+    private boolean isChoice;
+
+    public boolean isChoice() {
+        return isChoice;
+    }
+
+    public void setChoice(boolean choice) {
+        isChoice = choice;
+    }
+
+    public static Creator<FindPatientsBean> getCREATOR() {
+        return CREATOR;
+    }
 
     public String getAge() {
         return age;
@@ -172,6 +185,7 @@ public class FindPatientsBean implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.updated_by);
         dest.writeInt(this.id);
+        dest.writeByte(this.isChoice ? (byte) 1 : (byte) 0);
     }
 
     protected FindPatientsBean(Parcel in) {
@@ -189,6 +203,7 @@ public class FindPatientsBean implements Parcelable {
         this.name = in.readString();
         this.updated_by = in.readString();
         this.id = in.readInt();
+        this.isChoice = in.readByte() != 0;
     }
 
     public static final Creator<FindPatientsBean> CREATOR = new Creator<FindPatientsBean>() {

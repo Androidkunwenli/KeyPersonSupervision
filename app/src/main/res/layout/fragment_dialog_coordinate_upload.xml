@@ -42,6 +42,7 @@
             android:textSize="@dimen/sp_14" />
 
         <EditText
+            android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_background_input"
@@ -63,6 +64,7 @@
             android:textSize="@dimen/sp_14" />
 
         <Spinner
+            android:id="@+id/sp_vip_level"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/region" />
@@ -83,6 +85,7 @@
             android:textSize="@dimen/sp_14" />
 
         <Spinner
+            android:id="@+id/sp_area_remake"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/frequency" />
@@ -111,11 +114,13 @@
     </LinearLayout>
 
     <CheckBox
+        android:id="@+id/cb_upload_heart_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="上传心率" />
 
     <TextView
+        android:id="@+id/tv_sure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
